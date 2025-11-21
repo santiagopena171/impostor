@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Impostor Futbolero</string>
+    <string name="title_activity_main">Impostor Futbolero</string>
+    <string name="package_name">com.impostorfutbolero.app</string>
+    <string name="custom_url_scheme">com.impostorfutbolero.app</string>
+</resources>
