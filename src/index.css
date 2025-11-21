@@ -1,0 +1,136 @@
+:root {
+  --primary: #ff0055;
+  --secondary: #00e5ff;
+  --bg-dark: #0f172a;
+  --bg-card: #1e293b;
+  --text-light: #f8fafc;
+  --text-dim: #94a3b8;
+  --gradient-main: linear-gradient(135deg, #ff0055 0%, #00e5ff 100%);
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+}
+
+h1 {
+  font-size: 2.5rem;
+  background: var(--gradient-main);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  filter: drop-shadow(0 0 20px rgba(255, 0, 85, 0.3));
+}
+
+button {
+  background: var(--gradient-main);
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 10px 30px -10px rgba(255, 0, 85, 0.5);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px -10px rgba(255, 0, 85, 0.6);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+.card {
+  background: var(--bg-card);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 20px;
+}
+
+input, textarea, select {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px;
+  color: white;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--secondary);
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.player-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.player-item {
+  background: rgba(255, 255, 255, 0.03);
+  margin-bottom: 8px;
+  padding: 16px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.role-reveal {
+  font-weight: 700;
+  color: var(--secondary);
+}
+
+.impostor {
+  color: var(--primary);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
