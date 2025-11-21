@@ -1,0 +1,7 @@
+{
+    "name": "impostor",
+    "integrations": {
+        "capacitor": {}
+    },
+    "type": "custom"
+}
