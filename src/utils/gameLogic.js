@@ -37,3 +37,28 @@ export const assignRoles = (playerNames, impostorCount) => {
         }
     });
 };
+
+export const assignUniquePlayers = (playerNames) => {
+    // Filtrar nombres vacíos
+    const players = playerNames.filter(name => name.trim() !== '');
+
+    if (players.length < 1) {
+        throw new Error("Se necesita al menos 1 jugador.");
+    }
+
+    if (players.length > footballers.length) {
+        throw new Error(`No hay suficientes futbolistas en la base de datos para ${players.length} jugadores.`);
+    }
+
+    // Copiar y mezclar futbolistas
+    const availableFootballers = [...footballers];
+    for (let i = availableFootballers.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [availableFootballers[i], availableFootballers[j]] = [availableFootballers[j], availableFootballers[i]];
+    }
+
+    // Asignar roles
+    return players.map((name, index) => {
+        return { name, role: availableFootballers[index], isImpostor: false };
+    });
+};
