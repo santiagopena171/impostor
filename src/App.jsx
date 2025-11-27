@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import Home from './components/Home';
 import ImpostorGame from './games/impostor/ImpostorGame';
 import GuessPlayerGame from './games/guess-player/GuessPlayerGame';
+import TorresGame from './games/torres/TorresGame';
 
 function App() {
-  const [currentView, setCurrentView] = useState('home'); // 'home', 'impostor', 'guess-player'
+  const [currentView, setCurrentView] = useState('home'); // 'home', 'impostor', 'guess-player', 'torres'
 
   const handleSelectGame = (gameId) => {
     setCurrentView(gameId);
@@ -26,6 +27,10 @@ function App() {
 
       {currentView === 'guess-player' && (
         <GuessPlayerGame onBack={handleBackToHome} />
+      )}
+
+      {currentView === 'torres' && (
+        <TorresGame onBack={handleBackToHome} />
       )}
     </>
   );

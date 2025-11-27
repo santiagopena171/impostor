@@ -16,6 +16,13 @@ function Home({ onSelectGame }) {
             description: 'Cada uno recibe un futbolista distinto. ¡Adivina quién es quién!',
             icon: '🕵️',
             gradient: 'linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%)'
+        },
+        {
+            id: 'torres',
+            title: 'Torres Futboleras',
+            description: 'Cada jugador recibe una torre (descripción) distinta.',
+            icon: '🏗️',
+            gradient: 'linear-gradient(135deg, #F2994A 0%, #F2C94C 100%)'
         }
     ];
 

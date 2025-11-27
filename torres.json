@@ -1,0 +1,398 @@
+[
+    {
+        "id": 1,
+        "descripcion": "Ganó al menos un Balón de Oro"
+    },
+    {
+        "id": 2,
+        "descripcion": "Ganó la Copa del Mundo"
+    },
+    {
+        "id": 3,
+        "descripcion": "Es zurdo"
+    },
+    {
+        "id": 4,
+        "descripcion": "Jugó en la Premier League (Inglaterra) y en La Liga (España)"
+    },
+    {
+        "id": 5,
+        "descripcion": "Fue compañero de equipo de Lionel Messi"
+    },
+    {
+        "id": 6,
+        "descripcion": "Fue compañero de equipo de Cristiano Ronaldo"
+    },
+    {
+        "id": 7,
+        "descripcion": "Usó el dorsal número 10 en algún equipo o selección"
+    },
+    {
+        "id": 8,
+        "descripcion": "Usó el dorsal número 7 en algún equipo o selección"
+    },
+    {
+        "id": 9,
+        "descripcion": "Mide menos de 1.70m"
+    },
+    {
+        "id": 10,
+        "descripcion": "Mide más de 1.90m"
+    },
+    {
+        "id": 11,
+        "descripcion": "Es un 'One Club Man' (Jugó toda su carrera profesional en un solo club)"
+    },
+    {
+        "id": 12,
+        "descripcion": "Ha marcado un gol en una final de Champions League"
+    },
+    {
+        "id": 13,
+        "descripcion": "Es hijo de un ex-futbolista profesional"
+    },
+    {
+        "id": 14,
+        "descripcion": "Fue dirigido por Pep Guardiola"
+    },
+    {
+        "id": 15,
+        "descripcion": "Fue dirigido por José Mourinho"
+    },
+    {
+        "id": 16,
+        "descripcion": "Ha jugado en los dos equipos más grandes y rivales de un mismo país"
+    },
+    {
+        "id": 17,
+        "descripcion": "Ganó la Bota de Oro Europea"
+    },
+    {
+        "id": 18,
+        "descripcion": "Se retiró y ahora es entrenador"
+    },
+    {
+        "id": 19,
+        "descripcion": "Fue capitán de su selección en un Mundial"
+    },
+    {
+        "id": 20,
+        "descripcion": "Ganó la Copa América"
+    },
+    {
+        "id": 21,
+        "descripcion": "Ganó la Eurocopa"
+    },
+    {
+        "id": 22,
+        "descripcion": "Ganó la Copa Libertadores"
+    },
+    {
+        "id": 23,
+        "descripcion": "Fue compañero de equipo de Neymar Jr."
+    },
+    {
+        "id": 24,
+        "descripcion": "Fue compañero de equipo de Zinedine Zidane"
+    },
+    {
+        "id": 25,
+        "descripcion": "Fue compañero de equipo de Ronaldinho"
+    },
+    {
+        "id": 26,
+        "descripcion": "Ganó el premio Golden Boy (Mejor jugador joven de Europa)"
+    },
+    {
+        "id": 27,
+        "descripcion": "Jugó en la Serie A (Italia) y en La Liga (España)"
+    },
+    {
+        "id": 28,
+        "descripcion": "Jugó en la Premier League (Inglaterra) y en la Serie A (Italia)"
+    },
+    {
+        "id": 29,
+        "descripcion": "Es el máximo goleador histórico de su selección"
+    },
+    {
+        "id": 30,
+        "descripcion": "Ha marcado más de 500 goles en su carrera"
+    },
+    {
+        "id": 31,
+        "descripcion": "Jugó profesionalmente después de los 40 años"
+    },
+    {
+        "id": 32,
+        "descripcion": "Fue dirigido por Carlo Ancelotti"
+    },
+    {
+        "id": 33,
+        "descripcion": "Fue dirigido por Jürgen Klopp"
+    },
+    {
+        "id": 34,
+        "descripcion": "Nunca ha ganado la Champions League"
+    },
+    {
+        "id": 35,
+        "descripcion": "Nunca ha ganado un Mundial"
+    },
+    {
+        "id": 36,
+        "descripcion": "Usó el dorsal número 9"
+    },
+    {
+        "id": 37,
+        "descripcion": "Usó el dorsal número 11"
+    },
+    {
+        "id": 38,
+        "descripcion": "Jugó en un equipo de la ciudad de Londres"
+    },
+    {
+        "id": 39,
+        "descripcion": "Jugó en un equipo de la ciudad de Milán"
+    },
+    {
+        "id": 40,
+        "descripcion": "Jugó en un equipo de la ciudad de Madrid"
+    },
+    {
+        "id": 41,
+        "descripcion": "Ganó la medalla de oro en los Juegos Olímpicos"
+    },
+    {
+        "id": 42,
+        "descripcion": "Ganó el Mundial de Clubes"
+    },
+    {
+        "id": 43,
+        "descripcion": "Ha jugado en la MLS (Estados Unidos)"
+    },
+    {
+        "id": 44,
+        "descripcion": "Fue compañero de equipo de Luis Suárez"
+    },
+    {
+        "id": 45,
+        "descripcion": "Fue compañero de equipo de Sergio Ramos"
+    },
+    {
+        "id": 46,
+        "descripcion": "Fue compañero de equipo de Zlatan Ibrahimovic"
+    },
+    {
+        "id": 47,
+        "descripcion": "Fue compañero de equipo de Andrés Iniesta"
+    },
+    {
+        "id": 48,
+        "descripcion": "Fue dirigido por Sir Alex Ferguson"
+    },
+    {
+        "id": 49,
+        "descripcion": "Es ambidiestro (o maneja muy bien ambas piernas)"
+    },
+    {
+        "id": 50,
+        "descripcion": "Jugó en la Bundesliga (Liga de Alemania)"
+    },
+    {
+        "id": 51,
+        "descripcion": "Jugó en la Ligue 1 (Liga de Francia)"
+    },
+    {
+        "id": 52,
+        "descripcion": "Jugó en la Liga de Portugal"
+    },
+    {
+        "id": 53,
+        "descripcion": "Jugó en un equipo de la ciudad de Manchester"
+    },
+    {
+        "id": 54,
+        "descripcion": "Jugó en un equipo de la ciudad de Buenos Aires"
+    },
+    {
+        "id": 55,
+        "descripcion": "Jugó en la liga de Brasil"
+    },
+    {
+        "id": 56,
+        "descripcion": "Ha sido portada de un videojuego de fútbol (FIFA o PES)"
+    },
+    {
+        "id": 57,
+        "descripcion": "Fue el fichaje más caro del mundo en su momento"
+    },
+    {
+        "id": 58,
+        "descripcion": "Perdió una final de la Copa del Mundo"
+    },
+    {
+        "id": 59,
+        "descripcion": "Tiene un apodo de animal (Ej. El Tigre, La Pulga, El Toro)"
+    },
+    {
+        "id": 60,
+        "descripcion": "Ha jugado en al menos 3 de las 5 grandes ligas de Europa"
+    },
+    {
+        "id": 61,
+        "descripcion": "Fue compañero de equipo de Karim Benzema"
+    },
+    {
+        "id": 62,
+        "descripcion": "Fue compañero de equipo de Luka Modric"
+    },
+    {
+        "id": 63,
+        "descripcion": "Fue compañero de equipo de Xavi Hernández"
+    },
+    {
+        "id": 64,
+        "descripcion": "Fue compañero de equipo de Wayne Rooney"
+    },
+    {
+        "id": 65,
+        "descripcion": "Fue compañero de equipo de David Beckham"
+    },
+    {
+        "id": 66,
+        "descripcion": "Fue compañero de equipo de Ronaldo Nazário"
+    },
+    {
+        "id": 67,
+        "descripcion": "Fue compañero de equipo de Kaká"
+    },
+    {
+        "id": 68,
+        "descripcion": "Fue compañero de equipo de Andrea Pirlo"
+    },
+    {
+        "id": 69,
+        "descripcion": "Fue compañero de equipo de Gianluigi Buffon"
+    },
+    {
+        "id": 70,
+        "descripcion": "Fue compañero de equipo de Thierry Henry"
+    },
+    {
+        "id": 71,
+        "descripcion": "Fue dirigido por Zinedine Zidane (como entrenador)"
+    },
+    {
+        "id": 72,
+        "descripcion": "Fue dirigido por Diego Simeone"
+    },
+    {
+        "id": 73,
+        "descripcion": "Jugó en la Liga de Holanda (Eredivisie)"
+    },
+    {
+        "id": 74,
+        "descripcion": "Jugó en la Liga de Japón"
+    },
+    {
+        "id": 75,
+        "descripcion": "Jugó en la Liga de China"
+    },
+    {
+        "id": 76,
+        "descripcion": "Ha jugado en más de 4 ligas diferentes"
+    },
+    {
+        "id": 77,
+        "descripcion": "Ha sido máximo goleador de un Mundial"
+    },
+    {
+        "id": 78,
+        "descripcion": "Ha vuelto a un club donde ya había jugado (Segunda etapa)"
+    },
+    {
+        "id": 79,
+        "descripcion": "Tiene un hermano que también es futbolista profesional"
+    },
+    {
+        "id": 80,
+        "descripcion": "Jugó en un equipo de la ciudad de Liverpool"
+    },
+    {
+        "id": 81,
+        "descripcion": "Fue compañero de equipo de Robert Lewandowski"
+    },
+    {
+        "id": 82,
+        "descripcion": "Fue compañero de equipo de Kylian Mbappé"
+    },
+    {
+        "id": 83,
+        "descripcion": "Fue compañero de equipo de Erling Haaland"
+    },
+    {
+        "id": 84,
+        "descripcion": "Fue compañero de equipo de Kevin De Bruyne"
+    },
+    {
+        "id": 85,
+        "descripcion": "Fue compañero de equipo de Iker Casillas"
+    },
+    {
+        "id": 86,
+        "descripcion": "Fue compañero de equipo de Carles Puyol"
+    },
+    {
+        "id": 87,
+        "descripcion": "Fue compañero de equipo de Steven Gerrard"
+    },
+    {
+        "id": 88,
+        "descripcion": "Fue compañero de equipo de Frank Lampard"
+    },
+    {
+        "id": 89,
+        "descripcion": "Fue compañero de equipo de Didier Drogba"
+    },
+    {
+        "id": 90,
+        "descripcion": "Jugó en la Bundesliga (Alemania) y en la Premier League (Inglaterra)"
+    },
+    {
+        "id": 91,
+        "descripcion": "Jugó en la Bundesliga (Alemania) y en La Liga (España)"
+    },
+    {
+        "id": 92,
+        "descripcion": "Jugó en un equipo de la ciudad de Barcelona"
+    },
+    {
+        "id": 93,
+        "descripcion": "Jugó en un equipo de la ciudad de Múnich"
+    },
+    {
+        "id": 94,
+        "descripcion": "Jugó en un equipo de la ciudad de Turín"
+    },
+    {
+        "id": 95,
+        "descripcion": "Jugó en el Benfica o en el Porto"
+    },
+    {
+        "id": 96,
+        "descripcion": "Jugó en River Plate o en Boca Juniors"
+    },
+    {
+        "id": 97,
+        "descripcion": "Marcó un gol en una final de la Copa del Mundo"
+    },
+    {
+        "id": 98,
+        "descripcion": "Ha jugado más de 100 partidos con su selección"
+    },
+    {
+        "id": 99,
+        "descripcion": "Jugó en un equipo con 'United' en su nombre"
+    }
+]

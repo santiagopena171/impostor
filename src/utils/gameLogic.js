@@ -1,4 +1,5 @@
 import { footballers } from '../data/footballers';
+import torres from '../data/torres.json';
 
 export const assignRoles = (playerNames, impostorCount) => {
     // Filtrar nombres vacíos
@@ -60,5 +61,34 @@ export const assignUniquePlayers = (playerNames) => {
     // Asignar roles
     return players.map((name, index) => {
         return { name, role: availableFootballers[index], isImpostor: false };
+    });
+};
+
+export const assignUniqueTowers = (playerNames) => {
+    // Filtrar nombres vacíos
+    const players = playerNames.filter(name => name.trim() !== '');
+
+    if (players.length < 1) {
+        throw new Error("Se necesita al menos 1 jugador.");
+    }
+
+    if (players.length > torres.length) {
+        throw new Error(`No hay suficientes torres para ${players.length} jugadores.`);
+    }
+
+    // Copiar y mezclar torres
+    const availableTowers = [...torres];
+    for (let i = availableTowers.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [availableTowers[i], availableTowers[j]] = [availableTowers[j], availableTowers[i]];
+    }
+
+    // Asignar roles (descripciones de torres)
+    return players.map((name, index) => {
+        return {
+            name,
+            role: availableTowers[index].descripcion,
+            isImpostor: false
+        };
     });
 };
