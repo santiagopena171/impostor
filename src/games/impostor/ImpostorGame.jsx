@@ -4,7 +4,7 @@ import GameConfig from '../../components/GameConfig';
 import ResultList from '../../components/ResultList';
 import { assignRoles } from '../../utils/gameLogic';
 
-function ImpostorGame({ onBack }) {
+function ImpostorGame({ onBack, gameMode }) {
     const [playerText, setPlayerText] = useState('');
     const [impostorCount, setImpostorCount] = useState(1);
     const [withHints, setWithHints] = useState(false);

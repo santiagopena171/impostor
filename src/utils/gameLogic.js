@@ -97,6 +97,16 @@ export const assignUniquePlayers = (playerNames) => {
     });
 };
 
+// Función auxiliar para obtener puntos según dificultad
+const getDifficultyPoints = (dificultad) => {
+    if (!dificultad) return 0;
+    if (dificultad.includes('FÁCIL')) return 1;
+    if (dificultad.includes('MEDIA')) return 2;
+    if (dificultad.includes('DIFÍCIL')) return 3;
+    if (dificultad.includes('EXTREMO')) return 4;
+    return 0;
+};
+
 export const assignUniqueTowers = (playerNames) => {
     // Filtrar nombres vacíos
     const players = playerNames.filter(name => name.trim() !== '');
@@ -118,10 +128,12 @@ export const assignUniqueTowers = (playerNames) => {
 
     // Asignar roles (descripciones de torres)
     return players.map((name, index) => {
+        const tower = availableTowers[index];
         return {
             name,
-            role: availableTowers[index].descripcion,
-            dificultad: availableTowers[index].dificultad,
+            role: tower.descripcion,
+            dificultad: tower.dificultad,
+            points: getDifficultyPoints(tower.dificultad),
             isImpostor: false
         };
     });
