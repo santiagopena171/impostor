@@ -121,6 +121,7 @@ export const assignUniqueTowers = (playerNames) => {
         return {
             name,
             role: availableTowers[index].descripcion,
+            dificultad: availableTowers[index].dificultad,
             isImpostor: false
         };
     });

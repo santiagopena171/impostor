@@ -43,7 +43,12 @@ const ResultList = ({ results }) => {
                     >
                         <span style={{ fontWeight: '600' }}>{player.name}</span>
                         <span className={`role-reveal ${revealed.has(index) && player.isImpostor ? 'impostor' : ''}`}>
-                            {revealed.has(index) ? player.role : '???'}
+                            {revealed.has(index) ? (
+                                <>
+                                    {player.dificultad && <span style={{ marginRight: '8px' }}>{player.dificultad}</span>}
+                                    {player.role}
+                                </>
+                            ) : '???'}
                         </span>
                     </li>
                 ))}

@@ -1,324 +1,77 @@
 [
-    {
-        "id": 1,
-        "descripcion": "Ganó al menos un Balón de Oro"
-    },
-    {
-        "id": 2,
-        "descripcion": "Ganó la Copa del Mundo"
-    },
-    {
-        "id": 3,
-        "descripcion": "Es zurdo"
-    },
-    {
-        "id": 4,
-        "descripcion": "Jugó en la Premier League (Inglaterra) y en La Liga (España)"
-    },
-    {
-        "id": 5,
-        "descripcion": "Fue compañero de equipo de Lionel Messi"
-    },
-    {
-        "id": 6,
-        "descripcion": "Fue compañero de equipo de Cristiano Ronaldo"
-    },
-    {
-        "id": 7,
-        "descripcion": "Usó el dorsal número 10 en algún equipo o selección"
-    },
-    {
-        "id": 8,
-        "descripcion": "Estuvieron Pelados"
-    },
-    {           
-        "id": 9,
-        "descripcion": "Ganadores de copa america"
-    },
-    {
-        "id": 10,
-        "descripcion": "Mide más de 1.90m"
-    },
-    {
-        "id": 11,
-        "descripcion": "Es un 'One Club Man' (Jugó toda su carrera profesional en un solo club)"
-    },
-    {
-        "id": 12,
-        "descripcion": "Ha marcado un gol en una final de Champions League"
-    },
-    {
-        "id": 13,
-        "descripcion": "No ganaron champions"
-    },
-    {
-        "id": 14,
-        "descripcion": "Jugaron en barca y madrid"
-    },
-    {
-        "id": 15,
-        "descripcion": "ganadores de libertadores"
-    },
-    {
-        "id": 16,
-        "descripcion": "Ha jugado en los dos equipos más grandes de un mismo país"
-    },
-    {
-        "id": 17,
-        "descripcion": "europeo que haya jugado en america"
-    },
-    {
-        "id": 18,
-        "descripcion": "Se retiró y ahora es entrenador"
-    },
-    {
-        "id": 19,
-        "descripcion": "campeon de premier"
-    },
-    {
-        "id": 20,
-        "descripcion": "campeon de la liga"
-    },
-    {
-        "id": 21,
-        "descripcion": "Ganó la Eurocopa"
-    },
-    {
-        "id": 22,
-        "descripcion": "Ganó premier y liga"
-    },
-    {
-        "id": 23,
-        "descripcion": "jugo en 2 clubes del big six."
-    },
-    {
-        "id": 24,
-        "descripcion": "gano libertadores y champions"
-    },
-    {
-        "id": 25,
-        "descripcion": "mas de 3 champions"
-    },
-    {
-        "id": 26,
-        "descripcion": "Ganó el premio Golden Boy "
-    },
-    {
-        "id": 27,
-        "descripcion": "Jugó en la Serie A (Italia) y en La Liga (España)"
-    },
-    {
-        "id": 28,
-        "descripcion": "Jugó en la Premier League (Inglaterra) y en la Serie A (Italia)"
-    },
-    {
-        "id": 29,
-        "descripcion": "Es el máximo goleador histórico de su selección"
-    },
-    {
-        "id": 30,
-        "descripcion": "Ha marcado más de 500 goles en su carrera"
-    },
-    {
-        "id": 31,
-        "descripcion": "Jugó profesionalmente después de los 40 años"
-    },
-    {
-        "id": 32,
-        "descripcion": "campeon de serie a"
-    },
-    {
-        "id": 33,
-        "descripcion": "jugo en el inter"
-    },
-    {
-        "id": 34,
-        "descripcion": "Nunca ha ganado la Champions League"
-    },
-    {
-        "id": 35,
-        "descripcion": "Nunca ha ganado un Mundial"
-    },
-    {
-        "id": 36,
-        "descripcion": "Usó el dorsal número 9"
-    },
-    {
-        "id": 37,
-        "descripcion": "jugo en el arsenal"
-    },
-    {
-        "id": 38,
-        "descripcion": "Jugó en un equipo de la ciudad de Londres"
-    },
-    {
-        "id": 39,
-        "descripcion": "Jugó en un equipo de la ciudad de Milán"
-    },
-    {
-        "id": 40,
-        "descripcion": "Jugó en un equipo de la ciudad de Madrid"
-    },
-    {
-        "id": 41,
-        "descripcion": "Ganó la medalla de oro en los Juegos Olímpicos"
-    },
-    {
-        "id": 42,
-        "descripcion": "Ganó el Mundial de Clubes"
-    },
-    {
-        "id": 43,
-        "descripcion": "jugo en el chelsea"
-    },
-    {
-        "id": 44,
-        "descripcion": "jugo en el liverpool"
-    },
-    {
-        "id": 45,
-        "descripcion": "laterales"
-    },
-    {
-        "id": 46,
-        "descripcion": "arqueros"
-    },
-    {
-        "id": 47,
-        "descripcion": "zagueros"
-    },
-    {
-        "id": 48,
-        "descripcion": "delanteros centros"
-    },
-    {
-        "id": 49,
-        "descripcion": "Es ambidiestro (o maneja muy bien ambas piernas)"
-    },
-    {
-        "id": 50,
-        "descripcion": "Jugó en la Bundesliga (Liga de Alemania)"
-    },
-    {
-        "id": 51,
-        "descripcion": "Jugó en la Ligue 1 (Liga de Francia)"
-    },
-    {
-        "id": 52,
-        "descripcion": "juega de enganche"
-    },
-    {
-        "id": 53,
-        "descripcion": "Jugó en el liverpool"
-    },
-    {
-        "id": 54,
-        "descripcion": "Jugó en el barca"
-    },
-    {
-        "id": 55,
-        "descripcion": "jugadores muy bajos"
-    },
-    {
-        "id": 56,
-        "descripcion": "se lesiona mucho"
-    },
-    {
-        "id": 57,
-        "descripcion": "le gusta la joda"
-    },
-    {
-        "id": 58,
-        "descripcion": "Perdió una final de la Copa del Mundo"
-    },
-    {
-        "id": 59,
-        "descripcion": "Tiene un apodo de animal (Ej. El Tigre, La Pulga, El Toro)"
-    },
-    {
-        "id": 60,
-        "descripcion": "Ha jugado en al menos 3 de las 5 grandes ligas de Europa"
-    },
-    {
-        "id": 61,
-        "descripcion": "nunca jugo un mundial"
-    },
-    {
-        "id": 62,
-        "descripcion": "capitanes de seleccion"
-    },
-    {
-        "id": 63,
-        "descripcion": "mas de 3 clubes"
-    },
-    {
-        "id": 64,
-        "descripcion": "mas de 5 clubes"
-    },
-    {
-        "id": 65,
-        "descripcion": "Ha sido máximo goleador de un Mundial"
-    },
-    {
-        "id": 66,
-        "descripcion": "Jugó en la Bundesliga (Alemania) y en la Premier League (Inglaterra)"
-    },
-    {
-        "id": 67,
-        "descripcion": "brasileros"
-    },
-    {
-        "id": 68,
-        "descripcion": "argentinos"
-    },
-    {
-        "id": 69,
-        "descripcion": "italianos"
-    },
-    {
-        "id": 70,
-        "descripcion": "franceses"
-    },
-    {
-        "id": 71,
-        "descripcion": "ingleses"
-    },
-    {
-        "id": 72,
-        "descripcion": "españoles"
-    },
-    {
-        "id": 73,
-        "descripcion": "alemanes"
-    },
-    {
-        "id": 74,
-        "descripcion": "Marcó un gol en una final de la Copa del Mundo"
-    },
-    
-    {
-        "id": 75,
-        "descripcion": "Ha sido máximo goleador de un Mundial"
-    },
-    {
-        "id": 76,
-        "descripcion": "Jugó en la Bundesliga (Alemania) y en la Premier League (Inglaterra)"
-    },
-    {
-        "id": 77,
-        "descripcion": "Jugó en la Bundesliga (Alemania) y en La Liga (España)"
-    },
-    {
-        "id": 78,
-        "descripcion": "Jugó en River Plate o en Boca Juniors"
-    },
-    {
-        "id": 79,
-        "descripcion": "Marcó un gol en una final de la Copa del Mundo"
-    },
-    {
-        "id": 80,
-        "descripcion": "Ha jugado más de 100 partidos con su selección"
-    }
-    
+  { "id": 1, "descripcion": "Ganó al menos un Balón de Oro", "dificultad": "🟢 FÁCIL" },
+  { "id": 2, "descripcion": "Ganó la Copa del Mundo", "dificultad": "🟢 FÁCIL" },
+  { "id": 3, "descripcion": "Es zurdo", "dificultad": "🟢 FÁCIL" },
+  { "id": 4, "descripcion": "Jugó en la Premier League (Inglaterra) y en La Liga (España)", "dificultad": "🟡 MEDIA" },
+  { "id": 5, "descripcion": "Fue compañero de equipo de Lionel Messi", "dificultad": "🟢 FÁCIL" },
+  { "id": 6, "descripcion": "Fue compañero de equipo de Cristiano Ronaldo", "dificultad": "🟢 FÁCIL" },
+  { "id": 7, "descripcion": "Usó el dorsal número 10 en algún equipo o selección", "dificultad": "🟢 FÁCIL" },
+  { "id": 8, "descripcion": "Estuvieron Pelados", "dificultad": "🟢 FÁCIL" },
+  { "id": 9, "descripcion": "Ganadores de copa america", "dificultad": "🟢 FÁCIL" },
+  { "id": 10, "descripcion": "Mide más de 1.90m", "dificultad": "🟢 FÁCIL" },
+  { "id": 11, "descripcion": "Es un 'One Club Man' (Jugó toda su carrera profesional en un solo club)", "dificultad": "🟡 MEDIA" },
+  { "id": 12, "descripcion": "Ha marcado un gol en una final de Champions League", "dificultad": "🟡 MEDIA" },
+  { "id": 13, "descripcion": "No ganaron champions", "dificultad": "🟢 FÁCIL" },
+  { "id": 14, "descripcion": "Jugaron en barca y madrid", "dificultad": "🟡 MEDIA" },
+  { "id": 15, "descripcion": "ganadores de libertadores", "dificultad": "🟢 FÁCIL" },
+  { "id": 16, "descripcion": "Ha jugado en los dos equipos más grandes de un mismo país", "dificultad": "🟡 MEDIA" },
+  { "id": 17, "descripcion": "europeo que haya jugado en america", "dificultad": "🟡 MEDIA" },
+  { "id": 18, "descripcion": "Se retiró y ahora es entrenador", "dificultad": "🟢 FÁCIL" },
+  { "id": 19, "descripcion": "campeon de premier", "dificultad": "🟢 FÁCIL" },
+  { "id": 20, "descripcion": "campeon de la liga", "dificultad": "🟢 FÁCIL" },
+  { "id": 21, "descripcion": "Ganó la Eurocopa", "dificultad": "🟢 FÁCIL" },
+  { "id": 22, "descripcion": "Ganó premier y liga", "dificultad": "🟡 MEDIA" },
+  { "id": 23, "descripcion": "jugo en 2 clubes del big six.", "dificultad": "🟡 MEDIA" },
+  { "id": 24, "descripcion": "gano libertadores y champions", "dificultad": "🔴 DIFÍCIL" },
+  { "id": 25, "descripcion": "mas de 3 champions", "dificultad": "🔴 DIFÍCIL" },
+  { "id": 26, "descripcion": "Ganó el premio Golden Boy ", "dificultad": "🔴 DIFÍCIL" },
+  { "id": 27, "descripcion": "Jugó en la Serie A (Italia) y en La Liga (España)", "dificultad": "🟡 MEDIA" },
+  { "id": 28, "descripcion": "Jugó en la Premier League (Inglaterra) y en la Serie A (Italia)", "dificultad": "🟡 MEDIA" },
+  { "id": 29, "descripcion": "Es el máximo goleador histórico de su selección", "dificultad": "🟡 MEDIA" },
+  { "id": 30, "descripcion": "Ha marcado más de 500 goles en su carrera", "dificultad": "🟡 MEDIA" },
+  { "id": 31, "descripcion": "Jugó profesionalmente después de los 40 años", "dificultad": "🔴 DIFÍCIL" },
+  { "id": 32, "descripcion": "campeon de serie a", "dificultad": "🟢 FÁCIL" },
+  { "id": 33, "descripcion": "jugo en el inter", "dificultad": "🟡 MEDIA" },
+  { "id": 34, "descripcion": "Nunca ha ganado un Mundial", "dificultad": "🟢 FÁCIL" },
+  { "id": 35, "descripcion": "Usó el dorsal número 9", "dificultad": "🟢 FÁCIL" },
+  { "id": 36, "descripcion": "jugo en el arsenal", "dificultad": "🟢 FÁCIL" },
+  { "id": 37, "descripcion": "Jugó en un equipo de la ciudad de Londres", "dificultad": "🟢 FÁCIL" },
+  { "id": 38, "descripcion": "Jugó en un equipo de la ciudad de Milán", "dificultad": "🟢 FÁCIL" },
+  { "id": 39, "descripcion": "Jugó en un equipo de la ciudad de Madrid", "dificultad": "🟢 FÁCIL" },
+  { "id": 40, "descripcion": "Ganó la medalla de oro en los Juegos Olímpicos", "dificultad": "🟢 FÁCIL" },
+  { "id": 41, "descripcion": "Ganó el Mundial de Clubes", "dificultad": "🟢 FÁCIL" },
+  { "id": 42, "descripcion": "jugo en el chelsea", "dificultad": "🟢 FÁCIL" },
+  { "id": 43, "descripcion": "jugo en el liverpool", "dificultad": "🟢 FÁCIL" },
+  { "id": 44, "descripcion": "laterales", "dificultad": "🟢 FÁCIL" },
+  { "id": 45, "descripcion": "arqueros", "dificultad": "🟢 FÁCIL" },
+  { "id": 46, "descripcion": "zagueros", "dificultad": "🟢 FÁCIL" },
+  { "id": 47, "descripcion": "delanteros centros", "dificultad": "🟢 FÁCIL" },
+  { "id": 48, "descripcion": "Es ambidiestro (o maneja muy bien ambas piernas)", "dificultad": "🟡 MEDIA" },
+  { "id": 49, "descripcion": "Jugó en la Bundesliga (Liga de Alemania)", "dificultad": "🟢 FÁCIL" },
+  { "id": 50, "descripcion": "Jugó en la Ligue 1 (Liga de Francia)", "dificultad": "🟢 FÁCIL" },
+  { "id": 51, "descripcion": "juega de enganche", "dificultad": "🟢 FÁCIL" },
+  { "id": 52, "descripcion": "Jugó en el barca", "dificultad": "🟢 FÁCIL" },
+  { "id": 53, "descripcion": "jugadores muy bajos", "dificultad": "🟢 FÁCIL" },
+  { "id": 54, "descripcion": "se lesiona mucho", "dificultad": "⚫ EXTREMO" },
+  { "id": 55, "descripcion": "le gusta la joda", "dificultad": "⚫ EXTREMO" },
+  { "id": 56, "descripcion": "Perdió una final de la Copa del Mundo", "dificultad": "🟢 FÁCIL" },
+  { "id": 57, "descripcion": "Tiene un apodo de animal (Ej. El Tigre, La Pulga, El Toro)", "dificultad": "🟡 MEDIA" },
+  { "id": 58, "descripcion": "Ha jugado en al menos 3 de las 5 grandes ligas de Europa", "dificultad": "🟡 MEDIA" },
+  { "id": 59, "descripcion": "nunca jugo un mundial", "dificultad": "🟢 FÁCIL" },
+  { "id": 60, "descripcion": "capitanes de seleccion", "dificultad": "🟢 FÁCIL" },
+  { "id": 61, "descripcion": "mas de 3 clubes", "dificultad": "🟢 FÁCIL" },
+  { "id": 62, "descripcion": "mas de 5 clubes", "dificultad": "🟢 FÁCIL" },
+  { "id": 63, "descripcion": "Ha sido máximo goleador de un Mundial", "dificultad": "🔴 DIFÍCIL" },
+  { "id": 64, "descripcion": "Jugó en la Bundesliga (Alemania) y en la Premier League (Inglaterra)", "dificultad": "🟡 MEDIA" },
+  { "id": 65, "descripcion": "brasileros", "dificultad": "🟢 FÁCIL" },
+  { "id": 66, "descripcion": "argentinos", "dificultad": "🟢 FÁCIL" },
+  { "id": 67, "descripcion": "italianos", "dificultad": "🟢 FÁCIL" },
+  { "id": 68, "descripcion": "franceses", "dificultad": "🟢 FÁCIL" },
+  { "id": 69, "descripcion": "ingleses", "dificultad": "🟢 FÁCIL" },
+  { "id": 70, "descripcion": "españoles", "dificultad": "🟢 FÁCIL" },
+  { "id": 71, "descripcion": "alemanes", "dificultad": "🟢 FÁCIL" },
+  { "id": 72, "descripcion": "Marcó un gol en una final de la Copa del Mundo", "dificultad": "🔴 DIFÍCIL" },
+  { "id": 73, "descripcion": "Jugó en la Bundesliga (Alemania) y en La Liga (España)", "dificultad": "🟡 MEDIA" },
+  { "id": 74, "descripcion": "Jugó en River Plate o en Boca Juniors", "dificultad": "🟢 FÁCIL" },
+  { "id": 75, "descripcion": "Ha jugado más de 100 partidos con su selección", "dificultad": "🟢 FÁCIL" }
 ]
