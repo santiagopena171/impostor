@@ -29,11 +29,11 @@
     },
     {
         "id": 8,
-        "descripcion": "Usó el dorsal número 7 en algún equipo o selección"
+        "descripcion": "Estuvieron Pelados"
     },
-    {
+    {           
         "id": 9,
-        "descripcion": "Mide menos de 1.70m"
+        "descripcion": "Ganadores de copa america"
     },
     {
         "id": 10,
@@ -49,23 +49,23 @@
     },
     {
         "id": 13,
-        "descripcion": "Es hijo de un ex-futbolista profesional"
+        "descripcion": "No ganaron champions"
     },
     {
         "id": 14,
-        "descripcion": "Fue dirigido por Pep Guardiola"
+        "descripcion": "Jugaron en barca y madrid"
     },
     {
         "id": 15,
-        "descripcion": "Fue dirigido por José Mourinho"
+        "descripcion": "ganadores de libertadores"
     },
     {
         "id": 16,
-        "descripcion": "Ha jugado en los dos equipos más grandes y rivales de un mismo país"
+        "descripcion": "Ha jugado en los dos equipos más grandes de un mismo país"
     },
     {
         "id": 17,
-        "descripcion": "Ganó la Bota de Oro Europea"
+        "descripcion": "europeo que haya jugado en america"
     },
     {
         "id": 18,
@@ -73,11 +73,11 @@
     },
     {
         "id": 19,
-        "descripcion": "Fue capitán de su selección en un Mundial"
+        "descripcion": "campeon de premier"
     },
     {
         "id": 20,
-        "descripcion": "Ganó la Copa América"
+        "descripcion": "campeon de la liga"
     },
     {
         "id": 21,
@@ -85,23 +85,23 @@
     },
     {
         "id": 22,
-        "descripcion": "Ganó la Copa Libertadores"
+        "descripcion": "Ganó premier y liga"
     },
     {
         "id": 23,
-        "descripcion": "Fue compañero de equipo de Neymar Jr."
+        "descripcion": "jugo en 2 clubes del big six."
     },
     {
         "id": 24,
-        "descripcion": "Fue compañero de equipo de Zinedine Zidane"
+        "descripcion": "gano libertadores y champions"
     },
     {
         "id": 25,
-        "descripcion": "Fue compañero de equipo de Ronaldinho"
+        "descripcion": "mas de 3 champions"
     },
     {
         "id": 26,
-        "descripcion": "Ganó el premio Golden Boy (Mejor jugador joven de Europa)"
+        "descripcion": "Ganó el premio Golden Boy "
     },
     {
         "id": 27,
@@ -125,11 +125,11 @@
     },
     {
         "id": 32,
-        "descripcion": "Fue dirigido por Carlo Ancelotti"
+        "descripcion": "campeon de serie a"
     },
     {
         "id": 33,
-        "descripcion": "Fue dirigido por Jürgen Klopp"
+        "descripcion": "jugo en el inter"
     },
     {
         "id": 34,
@@ -145,7 +145,7 @@
     },
     {
         "id": 37,
-        "descripcion": "Usó el dorsal número 11"
+        "descripcion": "jugo en el arsenal"
     },
     {
         "id": 38,
@@ -169,27 +169,27 @@
     },
     {
         "id": 43,
-        "descripcion": "Ha jugado en la MLS (Estados Unidos)"
+        "descripcion": "jugo en el chelsea"
     },
     {
         "id": 44,
-        "descripcion": "Fue compañero de equipo de Luis Suárez"
+        "descripcion": "jugo en el liverpool"
     },
     {
         "id": 45,
-        "descripcion": "Fue compañero de equipo de Sergio Ramos"
+        "descripcion": "laterales"
     },
     {
         "id": 46,
-        "descripcion": "Fue compañero de equipo de Zlatan Ibrahimovic"
+        "descripcion": "arqueros"
     },
     {
         "id": 47,
-        "descripcion": "Fue compañero de equipo de Andrés Iniesta"
+        "descripcion": "zagueros"
     },
     {
         "id": 48,
-        "descripcion": "Fue dirigido por Sir Alex Ferguson"
+        "descripcion": "delanteros centros"
     },
     {
         "id": 49,
@@ -205,27 +205,27 @@
     },
     {
         "id": 52,
-        "descripcion": "Jugó en la Liga de Portugal"
+        "descripcion": "juega de enganche"
     },
     {
         "id": 53,
-        "descripcion": "Jugó en un equipo de la ciudad de Manchester"
+        "descripcion": "Jugó en el liverpool"
     },
     {
         "id": 54,
-        "descripcion": "Jugó en un equipo de la ciudad de Buenos Aires"
+        "descripcion": "Jugó en el barca"
     },
     {
         "id": 55,
-        "descripcion": "Jugó en la liga de Brasil"
+        "descripcion": "jugadores muy bajos"
     },
     {
         "id": 56,
-        "descripcion": "Ha sido portada de un videojuego de fútbol (FIFA o PES)"
+        "descripcion": "se lesiona mucho"
     },
     {
         "id": 57,
-        "descripcion": "Fue el fichaje más caro del mundo en su momento"
+        "descripcion": "le gusta la joda"
     },
     {
         "id": 58,
@@ -241,158 +241,84 @@
     },
     {
         "id": 61,
-        "descripcion": "Fue compañero de equipo de Karim Benzema"
+        "descripcion": "nunca jugo un mundial"
     },
     {
         "id": 62,
-        "descripcion": "Fue compañero de equipo de Luka Modric"
+        "descripcion": "capitanes de seleccion"
     },
     {
         "id": 63,
-        "descripcion": "Fue compañero de equipo de Xavi Hernández"
+        "descripcion": "mas de 3 clubes"
     },
     {
         "id": 64,
-        "descripcion": "Fue compañero de equipo de Wayne Rooney"
+        "descripcion": "mas de 5 clubes"
     },
     {
         "id": 65,
-        "descripcion": "Fue compañero de equipo de David Beckham"
-    },
-    {
-        "id": 66,
-        "descripcion": "Fue compañero de equipo de Ronaldo Nazário"
-    },
-    {
-        "id": 67,
-        "descripcion": "Fue compañero de equipo de Kaká"
-    },
-    {
-        "id": 68,
-        "descripcion": "Fue compañero de equipo de Andrea Pirlo"
-    },
-    {
-        "id": 69,
-        "descripcion": "Fue compañero de equipo de Gianluigi Buffon"
-    },
-    {
-        "id": 70,
-        "descripcion": "Fue compañero de equipo de Thierry Henry"
-    },
-    {
-        "id": 71,
-        "descripcion": "Fue dirigido por Zinedine Zidane (como entrenador)"
-    },
-    {
-        "id": 72,
-        "descripcion": "Fue dirigido por Diego Simeone"
-    },
-    {
-        "id": 73,
-        "descripcion": "Jugó en la Liga de Holanda (Eredivisie)"
-    },
-    {
-        "id": 74,
-        "descripcion": "Jugó en la Liga de Japón"
-    },
-    {
-        "id": 75,
-        "descripcion": "Jugó en la Liga de China"
-    },
-    {
-        "id": 76,
-        "descripcion": "Ha jugado en más de 4 ligas diferentes"
-    },
-    {
-        "id": 77,
         "descripcion": "Ha sido máximo goleador de un Mundial"
     },
     {
-        "id": 78,
-        "descripcion": "Ha vuelto a un club donde ya había jugado (Segunda etapa)"
-    },
-    {
-        "id": 79,
-        "descripcion": "Tiene un hermano que también es futbolista profesional"
-    },
-    {
-        "id": 80,
-        "descripcion": "Jugó en un equipo de la ciudad de Liverpool"
-    },
-    {
-        "id": 81,
-        "descripcion": "Fue compañero de equipo de Robert Lewandowski"
-    },
-    {
-        "id": 82,
-        "descripcion": "Fue compañero de equipo de Kylian Mbappé"
-    },
-    {
-        "id": 83,
-        "descripcion": "Fue compañero de equipo de Erling Haaland"
-    },
-    {
-        "id": 84,
-        "descripcion": "Fue compañero de equipo de Kevin De Bruyne"
-    },
-    {
-        "id": 85,
-        "descripcion": "Fue compañero de equipo de Iker Casillas"
-    },
-    {
-        "id": 86,
-        "descripcion": "Fue compañero de equipo de Carles Puyol"
-    },
-    {
-        "id": 87,
-        "descripcion": "Fue compañero de equipo de Steven Gerrard"
-    },
-    {
-        "id": 88,
-        "descripcion": "Fue compañero de equipo de Frank Lampard"
-    },
-    {
-        "id": 89,
-        "descripcion": "Fue compañero de equipo de Didier Drogba"
-    },
-    {
-        "id": 90,
+        "id": 66,
         "descripcion": "Jugó en la Bundesliga (Alemania) y en la Premier League (Inglaterra)"
     },
     {
-        "id": 91,
+        "id": 67,
+        "descripcion": "brasileros"
+    },
+    {
+        "id": 68,
+        "descripcion": "argentinos"
+    },
+    {
+        "id": 69,
+        "descripcion": "italianos"
+    },
+    {
+        "id": 70,
+        "descripcion": "franceses"
+    },
+    {
+        "id": 71,
+        "descripcion": "ingleses"
+    },
+    {
+        "id": 72,
+        "descripcion": "españoles"
+    },
+    {
+        "id": 73,
+        "descripcion": "alemanes"
+    },
+    {
+        "id": 74,
+        "descripcion": "Marcó un gol en una final de la Copa del Mundo"
+    },
+    
+    {
+        "id": 75,
+        "descripcion": "Ha sido máximo goleador de un Mundial"
+    },
+    {
+        "id": 76,
+        "descripcion": "Jugó en la Bundesliga (Alemania) y en la Premier League (Inglaterra)"
+    },
+    {
+        "id": 77,
         "descripcion": "Jugó en la Bundesliga (Alemania) y en La Liga (España)"
     },
     {
-        "id": 92,
-        "descripcion": "Jugó en un equipo de la ciudad de Barcelona"
-    },
-    {
-        "id": 93,
-        "descripcion": "Jugó en un equipo de la ciudad de Múnich"
-    },
-    {
-        "id": 94,
-        "descripcion": "Jugó en un equipo de la ciudad de Turín"
-    },
-    {
-        "id": 95,
-        "descripcion": "Jugó en el Benfica o en el Porto"
-    },
-    {
-        "id": 96,
+        "id": 78,
         "descripcion": "Jugó en River Plate o en Boca Juniors"
     },
     {
-        "id": 97,
+        "id": 79,
         "descripcion": "Marcó un gol en una final de la Copa del Mundo"
     },
     {
-        "id": 98,
+        "id": 80,
         "descripcion": "Ha jugado más de 100 partidos con su selección"
-    },
-    {
-        "id": 99,
-        "descripcion": "Jugó en un equipo con 'United' en su nombre"
     }
+    
 ]

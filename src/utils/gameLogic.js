@@ -1,7 +1,7 @@
 import { footballers } from '../data/footballers';
 import torres from '../data/torres.json';
 
-export const assignRoles = (playerNames, impostorCount) => {
+export const assignRoles = (playerNames, impostorCount, withHints = false) => {
     // Filtrar nombres vacíos
     const players = playerNames.filter(name => name.trim() !== '');
 
@@ -28,10 +28,43 @@ export const assignRoles = (playerNames, impostorCount) => {
     // Seleccionar un único futbolista para esta ronda
     const commonFootballer = footballers[Math.floor(Math.random() * footballers.length)];
 
+    // Generar pista si está habilitado
+    let hint = '';
+    if (withHints) {
+        // Generar pista mostrando algunas letras del nombre
+        const nameLength = commonFootballer.length;
+        const charsToReveal = Math.ceil(nameLength * 0.3); // Revelar 30% de las letras
+        const positions = [];
+
+        // Seleccionar posiciones aleatorias para revelar
+        while (positions.length < charsToReveal) {
+            const pos = Math.floor(Math.random() * nameLength);
+            if (!positions.includes(pos)) {
+                positions.push(pos);
+            }
+        }
+
+        // Crear la pista con guiones bajos y letras reveladas
+        hint = commonFootballer.split('').map((char, idx) => {
+            if (positions.includes(idx)) {
+                return char;
+            } else if (char === ' ') {
+                return ' ';
+            } else {
+                return '_';
+            }
+        }).join('');
+    }
+
     // Asignar roles
     return players.map((name, index) => {
         if (impostorIndices.has(index)) {
-            return { name, role: 'IMPOSTOR', isImpostor: true };
+            return {
+                name,
+                role: withHints ? hint : 'IMPOSTOR',
+                isImpostor: true,
+                hint: withHints ? hint : null
+            };
         } else {
             // Asignar el futbolista común
             return { name, role: commonFootballer, isImpostor: false };

@@ -7,6 +7,7 @@ import { assignRoles } from '../../utils/gameLogic';
 function ImpostorGame({ onBack }) {
     const [playerText, setPlayerText] = useState('');
     const [impostorCount, setImpostorCount] = useState(1);
+    const [withHints, setWithHints] = useState(false);
     const [results, setResults] = useState(null);
     const [error, setError] = useState('');
 
@@ -14,7 +15,7 @@ function ImpostorGame({ onBack }) {
         setError('');
         try {
             const playerNames = playerText.split('\n');
-            const newResults = assignRoles(playerNames, impostorCount);
+            const newResults = assignRoles(playerNames, impostorCount, withHints);
             setResults(newResults);
         } catch (err) {
             setError(err.message);
@@ -52,6 +53,8 @@ function ImpostorGame({ onBack }) {
                         impostorCount={impostorCount}
                         setImpostorCount={setImpostorCount}
                         maxImpostors={Math.floor((playerText.split('\n').filter(l => l.trim()).length - 1) / 1)} // Simple logic, refined in validation
+                        withHints={withHints}
+                        setWithHints={setWithHints}
                     />
 
                     {error && (
