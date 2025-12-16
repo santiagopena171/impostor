@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PlayerInput from '../../components/PlayerInput';
 import ResultList from '../../components/ResultList';
 import Scoreboard from '../../components/Scoreboard';
 import RoundWinner from '../../components/RoundWinner';
 import { assignUniquePlayers } from '../../utils/gameLogic';
+import firebaseService from '../../services/firebaseService';
 
-function GuessPlayerGame({ onBack, gameMode, matchPlayers, globalScores, onUpdateScores }) {
+function GuessPlayerGame({ onBack, gameMode, matchPlayers, globalScores, onUpdateScores, isOnline, isHost, onlineRoomCode, currentPlayerName }) {
     const [playerText, setPlayerText] = useState(matchPlayers ? matchPlayers.join('\n') : '');
     const [results, setResults] = useState(null);
     const [error, setError] = useState('');
@@ -13,13 +14,61 @@ function GuessPlayerGame({ onBack, gameMode, matchPlayers, globalScores, onUpdat
     const [roundNumber, setRoundNumber] = useState(1);
     const [showWinner, setShowWinner] = useState(false);
     const [roundWinner, setRoundWinner] = useState(null);
+    const [allPlayers, setAllPlayers] = useState(null); // Jugadores completos (para sincronizar)
 
-    const handleNewRound = () => {
+    // Escuchar cambios en Firebase para modo online
+    useEffect(() => {
+        if (isOnline && onlineRoomCode && !isHost) {
+            const unsubscribe = firebaseService.onRoomUpdate(onlineRoomCode, (roomData) => {
+                if (roomData.gameState && roomData.gameState.guessPlayerResults) {
+                    setAllPlayers(roomData.gameState.guessPlayerResults);
+                    // Filtrar para mostrar solo los jugadores de los demás
+                    const filteredResults = roomData.gameState.guessPlayerResults.filter(
+                        r => r.name !== currentPlayerName
+                    );
+                    setResults(filteredResults);
+                }
+                // Actualizar scores cuando cambien en Firebase
+                if (roomData.scores) {
+                    setScores(roomData.scores);
+                }
+            });
+            
+            return () => {
+                if (unsubscribe) unsubscribe();
+            };
+        }
+    }, [isOnline, onlineRoomCode, isHost, currentPlayerName]);
+
+    // Sincronizar scores locales con globalScores cuando cambian
+    useEffect(() => {
+        if (globalScores && Object.keys(globalScores).length > 0) {
+            setScores(globalScores);
+        }
+    }, [globalScores]);
+
+    const handleNewRound = async () => {
         setError('');
         try {
             const playerNames = playerText.split('\n').filter(name => name.trim() !== '');
             const newResults = assignUniquePlayers(playerNames);
-            setResults(newResults);
+            
+            // Si es modo online, guardar en Firebase
+            if (isOnline && onlineRoomCode) {
+                await firebaseService.updateGameState(onlineRoomCode, {
+                    guessPlayerResults: newResults,
+                    roundNumber: roundNumber
+                });
+                setAllPlayers(newResults);
+            }
+            
+            // Si es online, filtrar resultados para no mostrar el jugador del usuario actual
+            if (isOnline && currentPlayerName) {
+                const filteredResults = newResults.filter(r => r.name !== currentPlayerName);
+                setResults(filteredResults);
+            } else {
+                setResults(newResults);
+            }
 
             // Inicializar scores si es modo competitivo y no hay scores
             if (gameMode === 'competitive' && Object.keys(scores).length === 0) {
@@ -40,6 +89,8 @@ function GuessPlayerGame({ onBack, gameMode, matchPlayers, globalScores, onUpdat
 
     const handleRoundComplete = (winnerName) => {
         if (gameMode === 'competitive' && winnerName) {
+            // Buscar en allPlayers si existe, sino en results
+            const searchResults = allPlayers || results;
             const newScores = { ...scores };
             newScores[winnerName] = (newScores[winnerName] || 0) + 1;
             setScores(newScores);
@@ -83,7 +134,7 @@ function GuessPlayerGame({ onBack, gameMode, matchPlayers, globalScores, onUpdat
                     padding: '10px 20px'
                 }}
             >
-                ← Cambiar Modo
+                ← Volver
             </button>
 
             <h1>Adivina mi Jugador 🕵️</h1>
@@ -112,9 +163,24 @@ function GuessPlayerGame({ onBack, gameMode, matchPlayers, globalScores, onUpdat
                         </div>
                     )}
 
-                    <button onClick={handleNewRound}>
-                        Repartir Jugadores
-                    </button>
+                    {(!isOnline || isHost) && (
+                        <button onClick={handleNewRound}>
+                            Repartir Jugadores
+                        </button>
+                    )}
+
+                    {isOnline && !isHost && (
+                        <div style={{
+                            background: 'rgba(255, 255, 255, 0.05)',
+                            padding: '20px',
+                            borderRadius: '12px',
+                            textAlign: 'center',
+                            color: 'var(--text-dim)',
+                            marginTop: '20px'
+                        }}>
+                            El anfitrión repartirá los jugadores
+                        </div>
+                    )}
                 </>
             ) : (
                 <>
@@ -123,36 +189,50 @@ function GuessPlayerGame({ onBack, gameMode, matchPlayers, globalScores, onUpdat
                     {gameMode === 'competitive' && (
                         <div className="card" style={{ marginTop: '20px' }}>
                             <h4 style={{ marginBottom: '15px' }}>¿Quién ganó la ronda?</h4>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                {results.map((player) => (
+                            {(!isOnline || isHost) ? (
+                                <>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                        {(allPlayers || results).map((player) => (
+                                            <button
+                                                key={player.name}
+                                                onClick={() => handleRoundComplete(player.name)}
+                                                style={{
+                                                    background: 'var(--secondary)',
+                                                    color: '#0f172a',
+                                                    padding: '12px'
+                                                }}
+                                            >
+                                                {player.name} (+1 punto)
+                                            </button>
+                                        ))}
+                                    </div>
                                     <button
-                                        key={player.name}
-                                        onClick={() => handleRoundComplete(player.name)}
+                                        onClick={handleSkipRound}
                                         style={{
-                                            background: 'var(--secondary)',
-                                            color: '#0f172a',
+                                            marginTop: '15px',
+                                            background: 'transparent',
+                                            border: '1px solid rgba(255,255,255,0.2)',
                                             padding: '12px'
                                         }}
                                     >
-                                        {player.name} (+1 punto)
+                                        Saltar Ronda (sin puntuar)
                                     </button>
-                                ))}
-                            </div>
-                            <button
-                                onClick={handleSkipRound}
-                                style={{
-                                    marginTop: '15px',
-                                    background: 'transparent',
-                                    border: '1px solid rgba(255,255,255,0.2)',
-                                    padding: '12px'
-                                }}
-                            >
-                                Saltar Ronda (sin puntuar)
-                            </button>
+                                </>
+                            ) : (
+                                <div style={{
+                                    background: 'rgba(255, 255, 255, 0.05)',
+                                    padding: '20px',
+                                    borderRadius: '12px',
+                                    textAlign: 'center',
+                                    color: 'var(--text-dim)'
+                                }}>
+                                    El anfitrión seleccionará al ganador
+                                </div>
+                            )}
                         </div>
                     )}
 
-                    {gameMode === 'casual' && (
+                    {gameMode === 'casual' && (!isOnline || isHost) && (
                         <>
                             <button
                                 onClick={handleNewRound}

@@ -2,7 +2,7 @@ import React from 'react';
 import GameCard from './GameCard';
 import Scoreboard from './Scoreboard';
 
-function Home({ onSelectGame, gameMode, matchData, globalScores, onBackToModeSelector }) {
+function Home({ onSelectGame, gameMode, matchData, globalScores, onBackToModeSelector, onSaveGame, isOnline, isHost, onlineRoomCode }) {
     const games = [
         {
             id: 'impostor',
@@ -43,28 +43,127 @@ function Home({ onSelectGame, gameMode, matchData, globalScores, onBackToModeSel
                 </p>
             </div>
 
+            {isOnline && onlineRoomCode && (
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '10px',
+                    marginBottom: '20px',
+                    padding: '12px 20px',
+                    background: 'rgba(79, 172, 254, 0.1)',
+                    borderRadius: '10px',
+                    border: '1px solid rgba(79, 172, 254, 0.3)',
+                    maxWidth: '400px',
+                    margin: '0 auto 20px'
+                }}>
+                    <span style={{ fontSize: '1rem', color: '#4facfe' }}>
+                        🔑 Código de Sala:
+                    </span>
+                    <span style={{
+                        fontSize: '1.3rem',
+                        fontWeight: '700',
+                        fontFamily: 'monospace',
+                        letterSpacing: '3px',
+                        color: '#fff'
+                    }}>
+                        {onlineRoomCode}
+                    </span>
+                    <button
+                        onClick={(e) => {
+                            navigator.clipboard.writeText(onlineRoomCode);
+                            const btn = e.target;
+                            const originalText = btn.textContent;
+                            btn.textContent = '✔️ Copiado';
+                            setTimeout(() => btn.textContent = originalText, 1500);
+                        }}
+                        style={{
+                            padding: '6px 14px',
+                            background: 'rgba(79, 172, 254, 0.2)',
+                            border: '1px solid rgba(79, 172, 254, 0.5)',
+                            color: '#4facfe',
+                            fontSize: '0.85rem',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                            fontWeight: '600'
+                        }}
+                    >
+                        📋 Copiar
+                    </button>
+                </div>
+            )}
+
             {gameMode === 'competitive' && matchData && globalScores && Object.keys(globalScores).length > 0 && (
                 <div style={{ marginBottom: '30px' }}>
                     <Scoreboard scores={globalScores} roundNumber={0} />
                 </div>
             )}
 
+            {/* Mensaje para jugadores no host en modo online */}
+            {isOnline && !isHost && (
+                <div style={{
+                    padding: '20px',
+                    background: 'rgba(79, 172, 254, 0.1)',
+                    borderRadius: '12px',
+                    textAlign: 'center',
+                    marginBottom: '20px',
+                    border: '1px solid rgba(79, 172, 254, 0.3)'
+                }}>
+                    <div style={{ fontSize: '2rem', marginBottom: '10px' }}>⏳</div>
+                    <div style={{ fontSize: '1.1rem', fontWeight: '600', marginBottom: '8px' }}>
+                        Esperando al anfitrión
+                    </div>
+                    <div style={{ fontSize: '0.9rem', opacity: '0.8' }}>
+                        El anfitrión seleccionará el juego para todos
+                    </div>
+                </div>
+            )}
+
             <div className="games-grid">
                 {games.map(game => {
                     const isDisabled = gameMode === 'competitive' && !game.competitiveEnabled;
+                    const cannotSelect = isOnline && !isHost; // En modo online, solo el host puede seleccionar
+                    const finalDisabled = isDisabled || cannotSelect;
+                    
                     return (
                         <GameCard
                             key={game.id}
                             title={game.title}
-                            description={isDisabled ? 'No disponible en modo competitivo' : game.description}
+                            description={
+                                isDisabled 
+                                    ? 'No disponible en modo competitivo' 
+                                    : cannotSelect 
+                                    ? 'Solo el anfitrión puede seleccionar'
+                                    : game.description
+                            }
                             icon={game.icon}
-                            gradient={isDisabled ? 'linear-gradient(135deg, #555 0%, #333 100%)' : game.gradient}
-                            onClick={() => !isDisabled && onSelectGame(game.id)}
-                            style={{ opacity: isDisabled ? 0.5 : 1, cursor: isDisabled ? 'not-allowed' : 'pointer' }}
+                            gradient={finalDisabled ? 'linear-gradient(135deg, #555 0%, #333 100%)' : game.gradient}
+                            onClick={() => !finalDisabled && onSelectGame(game.id)}
+                            style={{ opacity: finalDisabled ? 0.5 : 1, cursor: finalDisabled ? 'not-allowed' : 'pointer' }}
                         />
                     );
                 })}
             </div>
+
+            {onSaveGame && matchData && (
+                <button
+                    onClick={() => {
+                        console.log('💾 SAVE BUTTON CLICKED:', { isOnline, onlineRoomCode });
+                        onSaveGame();
+                    }}
+                    style={{
+                        marginTop: '20px',
+                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                        border: 'none',
+                        fontSize: '1rem',
+                        padding: '14px 28px',
+                        fontWeight: '600',
+                        boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4)',
+                    }}
+                >
+                    💾 Guardar Partida {isOnline && onlineRoomCode && `(${onlineRoomCode})`}
+                </button>
+            )}
 
             {onBackToModeSelector && (
                 <button

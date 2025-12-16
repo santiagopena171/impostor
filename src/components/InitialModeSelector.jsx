@@ -1,8 +1,40 @@
 import React from 'react';
 
-function InitialModeSelector({ onSelectMode }) {
+function InitialModeSelector({ onSelectMode, onLogout, username }) {
     return (
         <div className="app-container">
+            {username && onLogout && (
+                <div style={{
+                    position: 'absolute',
+                    top: '20px',
+                    right: '20px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '15px'
+                }}>
+                    <span style={{ 
+                        fontSize: '0.9rem', 
+                        color: 'var(--text-dim)' 
+                    }}>
+                        👤 {username}
+                    </span>
+                    <button
+                        onClick={onLogout}
+                        style={{
+                            padding: '8px 16px',
+                            background: 'transparent',
+                            border: '1px solid rgba(255, 255, 255, 0.2)',
+                            borderRadius: '6px',
+                            color: 'white',
+                            fontSize: '0.85rem',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        Cerrar Sesión
+                    </button>
+                </div>
+            )}
+
             <div className="home-header">
                 <h1 className="home-title">Footy Games</h1>
                 <p className="home-subtitle">¿Cómo querés jugar?</p>

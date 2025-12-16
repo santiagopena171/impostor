@@ -4,7 +4,7 @@ import GameConfig from '../../components/GameConfig';
 import ResultList from '../../components/ResultList';
 import { assignRoles } from '../../utils/gameLogic';
 
-function ImpostorGame({ onBack, gameMode }) {
+function ImpostorGame({ onBack, gameMode, isOnline, isHost }) {
     const [playerText, setPlayerText] = useState('');
     const [impostorCount, setImpostorCount] = useState(1);
     const [withHints, setWithHints] = useState(false);
@@ -48,14 +48,18 @@ function ImpostorGame({ onBack, gameMode }) {
 
             {!results ? (
                 <>
-                    <PlayerInput value={playerText} onChange={setPlayerText} />
-                    <GameConfig
-                        impostorCount={impostorCount}
-                        setImpostorCount={setImpostorCount}
-                        maxImpostors={Math.floor((playerText.split('\n').filter(l => l.trim()).length - 1) / 1)} // Simple logic, refined in validation
-                        withHints={withHints}
-                        setWithHints={setWithHints}
-                    />
+                    {(!isOnline || isHost) && (
+                        <>
+                            <PlayerInput value={playerText} onChange={setPlayerText} />
+                            <GameConfig
+                                impostorCount={impostorCount}
+                                setImpostorCount={setImpostorCount}
+                                maxImpostors={Math.floor((playerText.split('\n').filter(l => l.trim()).length - 1) / 1)} // Simple logic, refined in validation
+                                withHints={withHints}
+                                setWithHints={setWithHints}
+                            />
+                        </>
+                    )}
 
                     {error && (
                         <div style={{
@@ -70,25 +74,44 @@ function ImpostorGame({ onBack, gameMode }) {
                         </div>
                     )}
 
-                    <button onClick={handleNewRound}>
-                        Nueva Ronda
-                    </button>
+                    {(!isOnline || isHost) && (
+                        <button onClick={handleNewRound}>
+                            Nueva Ronda
+                        </button>
+                    )}
+
+                    {isOnline && !isHost && (
+                        <div style={{
+                            background: 'rgba(255, 255, 255, 0.05)',
+                            padding: '20px',
+                            borderRadius: '12px',
+                            textAlign: 'center',
+                            color: 'var(--text-dim)',
+                            marginTop: '20px'
+                        }}>
+                            El anfitrión repartirá los roles
+                        </div>
+                    )}
                 </>
             ) : (
                 <>
                     <ResultList results={results} />
-                    <button
-                        onClick={handleNewRound}
-                        style={{ marginTop: '20px', background: 'var(--secondary)', color: '#0f172a' }}
-                    >
-                        Nueva Ronda
-                    </button>
-                    <button
-                        onClick={handleReset}
-                        style={{ marginTop: '10px', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)' }}
-                    >
-                        Volver a Configuración
-                    </button>
+                    {(!isOnline || isHost) && (
+                        <>
+                            <button
+                                onClick={handleNewRound}
+                                style={{ marginTop: '20px', background: 'var(--secondary)', color: '#0f172a' }}
+                            >
+                                Nueva Ronda
+                            </button>
+                            <button
+                                onClick={handleReset}
+                                style={{ marginTop: '10px', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)' }}
+                            >
+                                Volver a Configuración
+                            </button>
+                        </>
+                    )}
                 </>
             )}
         </div>

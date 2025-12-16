@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PlayerInput from '../../components/PlayerInput';
 import ResultList from '../../components/ResultList';
 import Scoreboard from '../../components/Scoreboard';
 import RoundWinner from '../../components/RoundWinner';
 import { assignUniqueTowers } from '../../utils/gameLogic';
+import firebaseService from '../../services/firebaseService';
 
-function TorresGame({ onBack, gameMode, matchPlayers, globalScores, onUpdateScores }) {
+function TorresGame({ onBack, gameMode, matchPlayers, globalScores, onUpdateScores, isOnline, isHost, onlineRoomCode, currentPlayerName }) {
     const [playerText, setPlayerText] = useState(matchPlayers ? matchPlayers.join('\n') : '');
     const [results, setResults] = useState(null);
     const [error, setError] = useState('');
@@ -13,13 +14,64 @@ function TorresGame({ onBack, gameMode, matchPlayers, globalScores, onUpdateScor
     const [roundNumber, setRoundNumber] = useState(1);
     const [showWinner, setShowWinner] = useState(false);
     const [roundWinner, setRoundWinner] = useState(null);
+    const [allTowers, setAllTowers] = useState(null); // Torres completas (solo para sincronizar)
 
-    const handleNewRound = () => {
+    // Debug
+    console.log('TorresGame props:', { isOnline, isHost, currentPlayerName, onlineRoomCode });
+
+    // Escuchar cambios en Firebase para modo online
+    useEffect(() => {
+        if (isOnline && onlineRoomCode && !isHost) {
+            const unsubscribe = firebaseService.onRoomUpdate(onlineRoomCode, (roomData) => {
+                if (roomData.gameState && roomData.gameState.torresResults) {
+                    setAllTowers(roomData.gameState.torresResults);
+                    // Filtrar para mostrar solo las torres de los demás
+                    const filteredResults = roomData.gameState.torresResults.filter(
+                        r => r.name !== currentPlayerName
+                    );
+                    setResults(filteredResults);
+                }
+                // Actualizar scores cuando cambien en Firebase
+                if (roomData.scores) {
+                    setScores(roomData.scores);
+                }
+            });
+            
+            return () => {
+                if (unsubscribe) unsubscribe();
+            };
+        }
+    }, [isOnline, onlineRoomCode, isHost, currentPlayerName]);
+
+    // Sincronizar scores locales con globalScores cuando cambian
+    useEffect(() => {
+        if (globalScores && Object.keys(globalScores).length > 0) {
+            setScores(globalScores);
+        }
+    }, [globalScores]);
+
+    const handleNewRound = async () => {
         setError('');
         try {
             const playerNames = playerText.split('\n').filter(name => name.trim() !== '');
             const newResults = assignUniqueTowers(playerNames);
-            setResults(newResults);
+            
+            // Si es modo online, guardar en Firebase
+            if (isOnline && onlineRoomCode) {
+                await firebaseService.updateGameState(onlineRoomCode, {
+                    torresResults: newResults,
+                    roundNumber: roundNumber
+                });
+                setAllTowers(newResults);
+            }
+            
+            // Si es online, filtrar resultados para no mostrar la torre del jugador actual
+            if (isOnline && currentPlayerName) {
+                const filteredResults = newResults.filter(r => r.name !== currentPlayerName);
+                setResults(filteredResults);
+            } else {
+                setResults(newResults);
+            }
 
             // Inicializar scores si es modo competitivo y no hay scores
             if (gameMode === 'competitive' && Object.keys(scores).length === 0) {
@@ -40,10 +92,12 @@ function TorresGame({ onBack, gameMode, matchPlayers, globalScores, onUpdateScor
 
     const handleRoundComplete = (winnerName) => {
         if (gameMode === 'competitive' && winnerName) {
-            // Buscar el resultado del ganador para obtener los puntos
-            const winnerResult = results.find(r => r.name === winnerName);
+            // Buscar en allTowers si existe, sino en results
+            const searchResults = allTowers || results;
+            const winnerResult = searchResults.find(r => r.name === winnerName);
             if (winnerResult) {
-                const newScores = { ...scores };
+                // Usar globalScores en lugar de scores local
+                const newScores = { ...(globalScores || scores) };
                 newScores[winnerName] = (newScores[winnerName] || 0) + winnerResult.points;
                 setScores(newScores);
                 if (onUpdateScores) onUpdateScores(newScores);
@@ -87,7 +141,7 @@ function TorresGame({ onBack, gameMode, matchPlayers, globalScores, onUpdateScor
                     padding: '10px 20px'
                 }}
             >
-                ← Cambiar Modo
+                ← Volver
             </button>
 
             <h1>Torres Futboleras 🏗️</h1>
@@ -100,35 +154,76 @@ function TorresGame({ onBack, gameMode, matchPlayers, globalScores, onUpdateScor
             )}
 
             {!results ? (
-                <>
-                    <PlayerInput value={playerText} onChange={setPlayerText} />
-
-                    {error && (
+                <>{/* Mensaje para jugadores no host en modo online */}
+                    {isOnline && !isHost && (
                         <div style={{
-                            color: '#ff4d4d',
-                            background: 'rgba(255, 77, 77, 0.1)',
-                            padding: '10px',
-                            borderRadius: '8px',
-                            marginBottom: '16px',
-                            textAlign: 'center'
+                            padding: '20px',
+                            background: 'rgba(79, 172, 254, 0.1)',
+                            borderRadius: '12px',
+                            textAlign: 'center',
+                            marginBottom: '20px',
+                            border: '1px solid rgba(79, 172, 254, 0.3)'
                         }}>
-                            {error}
+                            <div style={{ fontSize: '2rem', marginBottom: '10px' }}>⏳</div>
+                            <div style={{ fontSize: '1.1rem', fontWeight: '600', marginBottom: '8px' }}>
+                                Esperando al anfitrión
+                            </div>
+                            <div style={{ fontSize: '0.9rem', opacity: '0.8' }}>
+                                El anfitrión repartirá las torres
+                            </div>
                         </div>
                     )}
 
-                    <button onClick={handleNewRound}>
-                        Repartir Torres
-                    </button>
+                    {(!isOnline || isHost) && (
+                        <>
+                            <PlayerInput value={playerText} onChange={setPlayerText} />
+
+                            {error && (
+                                <div style={{
+                                    color: '#ff4d4d',
+                                    background: 'rgba(255, 77, 77, 0.1)',
+                                    padding: '10px',
+                                    borderRadius: '8px',
+                                    marginBottom: '16px',
+                                    textAlign: 'center'
+                                }}>
+                                    {error}
+                                </div>
+                            )}
+
+                            <button onClick={handleNewRound}>
+                                Repartir Torres
+                            </button>
+                        </>
+                    )}
                 </>
             ) : (
                 <>
+                    {isOnline && (
+                        <div style={{
+                            padding: '16px',
+                            background: 'rgba(250, 112, 154, 0.1)',
+                            borderRadius: '12px',
+                            textAlign: 'center',
+                            marginBottom: '20px',
+                            border: '1px solid rgba(250, 112, 154, 0.3)'
+                        }}>
+                            <div style={{ fontSize: '0.95rem', fontWeight: '600', marginBottom: '4px' }}>
+                                🔒 Torres de los demás jugadores
+                            </div>
+                            <div style={{ fontSize: '0.85rem', opacity: '0.8' }}>
+                                Tu torre está oculta para ti
+                            </div>
+                        </div>
+                    )}
+                    
                     <ResultList results={results} gameMode={gameMode} />
                     
-                    {gameMode === 'competitive' && (
+                    {gameMode === 'competitive' && (isHost || !isOnline) && (
                         <div className="card" style={{ marginTop: '20px' }}>
                             <h4 style={{ marginBottom: '15px' }}>¿Quién ganó la ronda?</h4>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                {results.map((player) => (
+                                {(allTowers || results).map((player) => (
                                     <button
                                         key={player.name}
                                         onClick={() => handleRoundComplete(player.name)}
@@ -162,7 +257,19 @@ function TorresGame({ onBack, gameMode, matchPlayers, globalScores, onUpdateScor
                         </div>
                     )}
 
-                    {gameMode === 'casual' && (
+                    {gameMode === 'competitive' && isOnline && !isHost && (
+                        <div style={{
+                            padding: '16px',
+                            background: 'rgba(79, 172, 254, 0.1)',
+                            borderRadius: '12px',
+                            textAlign: 'center',
+                            marginTop: '20px'
+                        }}>
+                            ⏳ Esperando que el anfitrión seleccione al ganador...
+                        </div>
+                    )}
+
+                    {gameMode === 'casual' && (isHost || !isOnline) && (
                         <>
                             <button
                                 onClick={handleNewRound}
