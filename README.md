@@ -2,6 +2,16 @@
 
 Aplicación de juegos de fútbol interactivos con modos casual y competitivo, disponible tanto en modo **offline** como **online**.
 
+## 🚀 **NUEVO: Versión de Escritorio Disponible**
+
+¡Ahora puedes ejecutar la aplicación como aplicación nativa en Windows, macOS y Linux!
+
+👉 **[Ver INICIO_RAPIDO_ESCRITORIO.md](INICIO_RAPIDO_ESCRITORIO.md)** para comenzar
+
+```bash
+npm run electron:dev  # ¡Pruébalo ahora!
+```
+
 ## 🎮 Características Principales
 
 ### Modos de Juego
@@ -60,6 +70,9 @@ Ver la guía completa en [FIREBASE_SETUP.md](FIREBASE_SETUP.md)
 - ✅ Web (navegadores modernos)
 - ✅ Android (vía Capacitor)
 - ✅ iOS (vía Capacitor)
+- ✅ Windows (vía Electron)
+- ✅ macOS (vía Electron)
+- ✅ Linux (vía Electron)
 
 ## 🛠️ Tecnologías
 
@@ -70,6 +83,8 @@ Ver la guía completa en [FIREBASE_SETUP.md](FIREBASE_SETUP.md)
 
 ## 📖 Documentación
 
+- [INICIO_RAPIDO_ESCRITORIO.md](INICIO_RAPIDO_ESCRITORIO.md) - 🚀 Inicio rápido para versión de escritorio
+- [GUIA_ESCRITORIO.md](GUIA_ESCRITORIO.md) - Desarrollo para Windows, macOS y Linux
 - [GUIA_ONLINE.md](GUIA_ONLINE.md) - Guía completa de uso del modo online
 - [FIREBASE_SETUP.md](FIREBASE_SETUP.md) - Configuración de Firebase paso a paso
 - [GUIA_ANDROID.md](GUIA_ANDROID.md) - Compilación para Android
@@ -105,10 +120,10 @@ Ver la guía completa en [FIREBASE_SETUP.md](FIREBASE_SETUP.md)
 ## 📦 Scripts Disponibles
 
 ```bash
-# Desarrollo
+# Desarrollo Web
 npm run dev
 
-# Build para producción
+# Build para producción Web
 npm run build
 
 # Preview del build
@@ -117,7 +132,19 @@ npm run preview
 # Linting
 npm run lint
 
-# Sincronizar con Capacitor
+# Desarrollo Electron (Escritorio)
+npm run electron:dev
+
+# Build Electron
+npm run electron:build
+
+# Empaquetar Electron (sin instalador)
+npm run electron:pack
+
+# Crear instalador Electron
+npm run electron:make
+
+# Mobile - Sincronizar con Capacitor
 npx cap sync
 
 # Abrir en Android Studio

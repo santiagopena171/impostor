@@ -349,7 +349,67 @@ console.log('Tu UID:', window.firebaseService.auth.currentUser?.uid);
 
 ---
 
-## Próximos Pasos
+## Debugging en Versión de Escritorio (Electron)
+
+La aplicación ahora está disponible como aplicación de escritorio para Windows, macOS y Linux usando Electron. Para debugging en la versión de escritorio:
+
+### DevTools en Electron
+
+Las herramientas de desarrollo están habilitadas automáticamente en modo desarrollo:
+- **Windows/Linux**: `Ctrl + Shift + I`
+- **macOS**: `Cmd + Option + I`
+
+### Logs de Electron
+
+Los logs del proceso principal de Electron aparecen en:
+- **Windows**: `%APPDATA%\Impostor Futbolero\logs`
+- **macOS**: `~/Library/Logs/Impostor Futbolero`
+- **Linux**: `~/.config/Impostor Futbolero/logs`
+
+### Problemas Comunes en Electron
+
+**1. La aplicación no inicia**
+```bash
+# Asegúrate de construir primero
+npm run build
+
+# Luego copia a electron
+npx cap copy @capacitor-community/electron
+
+# Finalmente inicia
+cd electron && npm run electron:start
+```
+
+**2. Pantalla en blanco**
+- Abre DevTools y revisa la consola
+- Verifica que `electron/app/` tenga los archivos HTML/JS/CSS
+- Revisa el path en `electron/src/index.ts`
+
+**3. Firebase no funciona**
+- Firebase funciona exactamente igual que en la versión web
+- Los mismos logs de debugging aplican
+- Verifica que `firebase.config.js` esté configurado
+
+**4. Hot-reload no funciona en Windows**
+- Si tienes espacios en tu nombre de usuario, usa el modo alternativo:
+  ```bash
+  # Terminal 1
+  npm run build -- --watch
+  
+  # Terminal 2
+  cd electron && npm run electron:start
+  ```
+
+### Verificar versión de Electron
+
+En DevTools (Console):
+```javascript
+console.log('Electron version:', process.versions.electron);
+console.log('Chrome version:', process.versions.chrome);
+console.log('Node version:', process.versions.node);
+```
+
+---
 
 1. **Recargar la página** y abrir la consola (F12)
 2. **Copiar todos los logs** que aparecen
