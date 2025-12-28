@@ -14,6 +14,7 @@
     "electron:make": "npm run electron:build && cd electron && npm run electron:make"
   },
   "dependencies": {
+    "@capacitor-community/admob": "^8.0.0",
     "@capacitor-community/electron": "^5.0.1",
     "@capacitor/android": "^7.4.4",
     "@capacitor/cli": "^7.4.4",

@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import admobService from '../services/admobService';
 
 function InitialModeSelector({ onSelectMode, onLogout, username }) {
+    useEffect(() => {
+        admobService.showBanner();
+    }, []);
+
     return (
         <div className="app-container">
             {username && onLogout && (
@@ -12,9 +17,9 @@ function InitialModeSelector({ onSelectMode, onLogout, username }) {
                     alignItems: 'center',
                     gap: '15px'
                 }}>
-                    <span style={{ 
-                        fontSize: '0.9rem', 
-                        color: 'var(--text-dim)' 
+                    <span style={{
+                        fontSize: '0.9rem',
+                        color: 'var(--text-dim)'
                     }}>
                         👤 {username}
                     </span>
@@ -36,13 +41,13 @@ function InitialModeSelector({ onSelectMode, onLogout, username }) {
             )}
 
             <div className="home-header">
-                <h1 className="home-title">Footy Games</h1>
+                <h1 className="home-title">Impostor Futbolero</h1>
                 <p className="home-subtitle">¿Cómo querés jugar?</p>
             </div>
 
-            <div style={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
                 gap: '20px',
                 maxWidth: '500px',
                 margin: '0 auto',

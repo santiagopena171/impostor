@@ -1,5 +1,11 @@
 {
   "appId": "com.impostorfutbolero.app",
   "appName": "Impostor Futbolero",
-  "webDir": "dist"
+  "webDir": "dist",
+  "plugins": {
+    "AdMob": {
+      "androidAppId": "ca-app-pub-6763700053445538~4525255637",
+      "iosAppId": "ca-app-pub-3940256099942544~1458002511"
+    }
+  }
 }

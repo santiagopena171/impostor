@@ -14,6 +14,7 @@ import ImpostorGame from './games/impostor/ImpostorGame';
 import GuessPlayerGame from './games/guess-player/GuessPlayerGame';
 import TorresGame from './games/torres/TorresGame';
 import firebaseService from './services/firebaseService';
+import admobService from './services/admobService';
 
 const STORAGE_KEY = 'footyGamesMatches';
 
@@ -32,13 +33,20 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null); // Usuario autenticado
   const [isAuthChecking, setIsAuthChecking] = useState(true); // Verificando autenticación
 
+  // Inicializar AdMob al arrancar
+  useEffect(() => {
+    admobService.initialize().then(() => {
+      admobService.showAppOpenAd();
+    });
+  }, []);
+
   // Escuchar cambios de autenticación
   useEffect(() => {
     const unsubscribe = firebaseService.onAuthChange((user) => {
       console.log('🔐 Auth changed:', user ? user.email : 'No user');
       setCurrentUser(user);
       setIsAuthChecking(false);
-      
+
       // Si el usuario inició sesión, cargar sus partidas online
       if (user) {
         console.log('👤 User logged in, loading matches...');
@@ -99,7 +107,7 @@ function App() {
         matchToSave.onlineRoomCode = onlineRoomCode;
         matchToSave.onlinePlayerName = onlinePlayerName;
         matchToSave.isOnlineHost = isOnlineHost;
-        
+
         firebaseService.saveOnlineMatch(matchToSave)
           .then(() => {
             // Actualizar lista local
@@ -172,7 +180,7 @@ function App() {
 
   const handleSelectNetwork = (network) => {
     setNetworkMode(network);
-    
+
     if (network === 'offline') {
       // Verificar si hay partidas guardadas offline
       if (savedMatches.length > 0) {
@@ -205,30 +213,30 @@ function App() {
 
   const handleCreateMatch = (match) => {
     console.log('📝 CREATING MATCH:', match);
-    
+
     if (match.isOnline) {
       // Partida online
       setOnlineRoomCode(match.roomCode);
       setOnlinePlayerName(match.hostPlayerName);
       setIsOnlineHost(true);
       setMatchData(match);
-      
+
       console.log('🎯 Online state set:', {
         onlineRoomCode: match.roomCode,
         onlinePlayerName: match.hostPlayerName,
         isOnlineHost: true
       });
-      
+
       // Inicializar scores para todos los jugadores
       const initialScores = {};
       match.players.forEach(player => {
         initialScores[player] = 0;
       });
       setGlobalScores(initialScores);
-      
+
       // Ir al lobby
       setCurrentView('online-room-lobby');
-      
+
       // Escuchar cambios en la sala
       firebaseService.onRoomUpdate(match.roomCode, (roomData) => {
         if (roomData.scores) {
@@ -251,10 +259,10 @@ function App() {
       // Partida offline
       const newMatchId = Date.now().toString();
       const matchWithId = { ...match, id: newMatchId };
-      
+
       setCurrentMatchId(newMatchId);
       setMatchData(matchWithId);
-      
+
       // Inicializar scores para todos los jugadores
       const initialScores = {};
       match.players.forEach(player => {
@@ -272,15 +280,15 @@ function App() {
     setIsOnlineHost(false);
     setMatchData(matchInfo);
     setGlobalScores(matchInfo.scores || {});
-    
+
     // Establecer gameMode desde matchData
     if (matchInfo.gameMode) {
       setGameMode(matchInfo.gameMode);
     }
-    
+
     // Ir al lobby
     setCurrentView('online-room-lobby');
-    
+
     // Escuchar cambios en la sala
     firebaseService.onRoomUpdate(matchInfo.roomCode, (roomData) => {
       if (roomData.scores) {
@@ -303,7 +311,7 @@ function App() {
 
   const handleStartOnlineGame = async () => {
     console.log('Starting online game', { matchData, gameMode, globalScores });
-    
+
     // Actualizar estado en Firebase para que todos los jugadores vean el cambio
     if (onlineRoomCode) {
       try {
@@ -313,29 +321,29 @@ function App() {
         console.error('Error starting game:', error);
       }
     }
-    
+
     setCurrentView('home');
   };
 
   const handleSelectMatch = async (match) => {
     console.log('📂 Loading match:', match);
-    
+
     setCurrentMatchId(match.id);
     setMatchData(match.matchData);
     setGlobalScores(match.scores || {});
     setGameMode(match.gameMode || 'competitive');
     setNetworkMode(match.networkMode || 'offline');
-    
+
     // Si es una partida online, reconectar
     if (match.networkMode === 'online' && match.onlineRoomCode) {
       console.log('🌐 Reconnecting to online room:', match.onlineRoomCode);
       setOnlineRoomCode(match.onlineRoomCode);
       setOnlinePlayerName(match.onlinePlayerName);
-      
+
       // Determinar si este jugador es el host original (primer jugador de la lista)
       const originalHost = match.matchData.players && match.matchData.players[0];
       const isOriginalHost = match.onlinePlayerName === originalHost;
-      
+
       console.log('🔍 Host check:', {
         myName: match.onlinePlayerName,
         originalHost: originalHost,
@@ -346,7 +354,7 @@ function App() {
       try {
         const roomData = await firebaseService.getRoomData(match.onlineRoomCode);
         console.log('📦 Room data from Firebase:', roomData);
-        
+
         if (!roomData && isOriginalHost) {
           // Si el host original carga y la sala no existe, recrearla
           console.log('🏗️ Room not found, recreating as host...');
@@ -367,7 +375,7 @@ function App() {
             myName: match.onlinePlayerName,
             isHost: isHost
           });
-          
+
           if (isHost) {
             // Si es el host, actualizar con los datos guardados
             console.log('📝 Updating room data as host...');
@@ -385,11 +393,11 @@ function App() {
           setNetworkMode('offline');
           return;
         }
-        
+
         // Reconectar al jugador
         console.log('🔗 Reconnecting player...');
         await firebaseService.updatePlayerConnection(match.onlineRoomCode, match.onlinePlayerName, true);
-        
+
         // Escuchar cambios
         firebaseService.onRoomUpdate(match.onlineRoomCode, (roomData) => {
           if (roomData.scores) {
@@ -409,7 +417,7 @@ function App() {
             setCurrentView(roomData.currentGame);
           }
         });
-        
+
       } catch (error) {
         console.error('Error reconnecting to room:', error);
         alert('Error al reconectar. Se cargará en modo offline.');
@@ -417,7 +425,7 @@ function App() {
         setIsOnlineHost(false);
       }
     }
-    
+
     // Si había un juego en progreso, volver a ese juego
     if (match.currentGame && ['impostor', 'guess-player', 'torres'].includes(match.currentGame)) {
       setCurrentView(match.currentGame);
@@ -444,7 +452,7 @@ function App() {
         setSavedMatches(updated);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
       }
-      
+
       // Si es la partida actual, limpiar
       if (matchId === currentMatchId) {
         setCurrentMatchId(null);
@@ -463,7 +471,7 @@ function App() {
         console.error('Error selecting game:', error);
       }
     }
-    
+
     setCurrentView(gameId);
   };
 
@@ -481,7 +489,7 @@ function App() {
         firebaseService.disconnectPlayer(onlineRoomCode, onlinePlayerName);
       }
     }
-    
+
     setCurrentView('mode-selector');
     // NO limpiar gameMode ni networkMode - se necesitan para cargar partidas
   };
@@ -505,7 +513,7 @@ function App() {
 
   const handleUpdateScores = (newScores) => {
     setGlobalScores(newScores);
-    
+
     // Si está en modo online, sincronizar con Firebase
     if (networkMode === 'online' && onlineRoomCode) {
       firebaseService.updateScores(onlineRoomCode, newScores);
@@ -521,7 +529,7 @@ function App() {
       matchData,
       currentUser
     });
-    
+
     // Validar que haya datos para guardar
     if (!matchData) {
       alert('No hay partida activa para guardar');
@@ -530,7 +538,7 @@ function App() {
 
     // Si ya tiene ID, actualizar; si no, crear nueva
     const matchId = currentMatchId || `match_${Date.now()}`;
-    
+
     // Crear objeto limpio para guardar (sin valores undefined)
     const matchToSave = {
       id: matchId,
@@ -554,12 +562,12 @@ function App() {
       matchToSave.onlineRoomCode = onlineRoomCode || null;
       matchToSave.onlinePlayerName = onlinePlayerName || null;
       matchToSave.isOnlineHost = isOnlineHost || false;
-      
+
       console.log('💾 Saving online match:', matchToSave);
 
       try {
         await firebaseService.saveOnlineMatch(matchToSave);
-        
+
         // Actualizar lista local
         setOnlineMatches(prev => {
           const existingIndex = prev.findIndex(m => m.id === matchId);
@@ -571,11 +579,11 @@ function App() {
             return [...prev, matchToSave];
           }
         });
-        
+
         if (!currentMatchId) {
           setCurrentMatchId(matchId);
         }
-        
+
         alert('Partida guardada exitosamente en el servidor');
       } catch (error) {
         console.error('Error guardando partida:', error);
@@ -605,11 +613,11 @@ function App() {
   };
 
   // Debug para verificar valores
-  console.log('App state:', { 
-    networkMode, 
-    isOnlineHost, 
-    onlinePlayerName, 
-    onlineRoomCode, 
+  console.log('App state:', {
+    networkMode,
+    isOnlineHost,
+    onlinePlayerName,
+    onlineRoomCode,
     currentView,
     currentUser: currentUser?.uid
   });
@@ -617,9 +625,9 @@ function App() {
   // Mostrar loading mientras verifica autenticación
   if (isAuthChecking) {
     return (
-      <div className="app-container" style={{ 
-        display: 'flex', 
-        alignItems: 'center', 
+      <div className="app-container" style={{
+        display: 'flex',
+        alignItems: 'center',
         justifyContent: 'center',
         minHeight: '100vh'
       }}>
@@ -634,7 +642,7 @@ function App() {
   return (
     <>
       {currentView === 'login' && (
-        <Login 
+        <Login
           onLogin={handleLogin}
           onRegister={handleRegister}
           onSkip={handleSkipLogin}
@@ -642,7 +650,7 @@ function App() {
       )}
 
       {currentView === 'mode-selector' && (
-        <InitialModeSelector 
+        <InitialModeSelector
           onSelectMode={handleSelectMode}
           onLogout={currentUser ? handleLogout : null}
           username={currentUser?.email?.split('@')[0]}
@@ -650,7 +658,7 @@ function App() {
       )}
 
       {currentView === 'network-selector' && (
-        <NetworkModeSelector 
+        <NetworkModeSelector
           onSelectNetwork={handleSelectNetwork}
           onBack={handleBackToModeSelector}
         />
@@ -691,7 +699,7 @@ function App() {
       )}
 
       {currentView === 'match-selector' && (
-        <MatchSelector 
+        <MatchSelector
           matches={networkMode === 'online' ? onlineMatches : savedMatches}
           onSelectMatch={handleSelectMatch}
           onNewMatch={handleNewMatch}
@@ -702,14 +710,14 @@ function App() {
       )}
 
       {currentView === 'match-creator' && (
-        <MatchCreator 
-          onCreateMatch={handleCreateMatch} 
+        <MatchCreator
+          onCreateMatch={handleCreateMatch}
           onBack={savedMatches.length > 0 ? handleBackToMatchSelector : handleBackToNetworkSelector}
         />
       )}
 
       {currentView === 'home' && (
-        <Home 
+        <Home
           onSelectGame={handleSelectGame}
           gameMode={gameMode}
           matchData={matchData}
@@ -723,7 +731,7 @@ function App() {
       )}
 
       {currentView === 'impostor' && (
-        <ImpostorGame 
+        <ImpostorGame
           onBack={handleBackToHome}
           gameMode={gameMode}
           isOnline={networkMode === 'online'}
@@ -734,7 +742,7 @@ function App() {
       )}
 
       {currentView === 'guess-player' && (
-        <GuessPlayerGame 
+        <GuessPlayerGame
           onBack={handleBackToHome}
           gameMode={gameMode}
           matchPlayers={matchData?.players}
@@ -748,7 +756,7 @@ function App() {
       )}
 
       {currentView === 'torres' && (
-        <TorresGame 
+        <TorresGame
           onBack={handleBackToHome}
           gameMode={gameMode}
           matchPlayers={matchData?.players}

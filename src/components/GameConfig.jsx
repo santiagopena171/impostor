@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GameConfig = ({ impostorCount, setImpostorCount, maxImpostors, withHints, setWithHints }) => {
+const GameConfig = ({ impostorCount, setImpostorCount, maxImpostors }) => {
     return (
         <div className="card">
             <label htmlFor="impostor-count">Cantidad de Impostores</label>
@@ -27,36 +27,6 @@ const GameConfig = ({ impostorCount, setImpostorCount, maxImpostors, withHints, 
                     Necesitas al menos 3 jugadores para tener 2 impostores.
                 </p>
             )}
-
-            <div style={{ marginTop: '16px' }}>
-                <label htmlFor="hints-toggle">Pistas para Impostores</label>
-                <div style={{ display: 'flex', gap: '10px' }}>
-                    <button
-                        type="button"
-                        onClick={() => setWithHints(false)}
-                        style={{
-                            background: !withHints ? 'var(--gradient-main)' : 'rgba(255,255,255,0.1)',
-                            opacity: !withHints ? 1 : 0.7,
-                            flex: 1,
-                            padding: '12px'
-                        }}
-                    >
-                        Sin Pistas
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => setWithHints(true)}
-                        style={{
-                            background: withHints ? 'var(--gradient-main)' : 'rgba(255,255,255,0.1)',
-                            opacity: withHints ? 1 : 0.7,
-                            flex: 1,
-                            padding: '12px'
-                        }}
-                    >
-                        Con Pistas
-                    </button>
-                </div>
-            </div>
         </div>
     );
 };

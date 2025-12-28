@@ -1,8 +1,18 @@
 import React from 'react';
 import GameCard from './GameCard';
 import Scoreboard from './Scoreboard';
+import admobService from '../services/admobService';
+import { useEffect } from 'react';
 
 function Home({ onSelectGame, gameMode, matchData, globalScores, onBackToModeSelector, onSaveGame, isOnline, isHost, onlineRoomCode }) {
+    useEffect(() => {
+        // Mostrar banner al entrar a Home
+        admobService.showBanner();
+
+        // Ocultar banner al salir de Home (opcional, depende de si quieres que siga visible)
+        // return () => admobService.hideBanner();
+    }, []);
+
     const games = [
         {
             id: 'impostor',
@@ -10,7 +20,7 @@ function Home({ onSelectGame, gameMode, matchData, globalScores, onBackToModeSel
             description: 'Descubre quién es el impostor entre los futbolistas famosos',
             icon: '⚽',
             gradient: 'linear-gradient(135deg, #ff0055 0%, #00e5ff 100%)',
-            competitiveEnabled: false
+            competitiveEnabled: matchData?.players?.length >= 3
         },
         {
             id: 'guess-player',
@@ -33,7 +43,7 @@ function Home({ onSelectGame, gameMode, matchData, globalScores, onBackToModeSel
     return (
         <div className="home-container">
             <div className="home-header">
-                <h1 className="home-title">Footy Games</h1>
+                <h1 className="home-title">Impostor Futbolero</h1>
                 <p className="home-subtitle">
                     {gameMode === 'competitive' && matchData ? (
                         <>🏆 {matchData.name}</>
@@ -124,17 +134,19 @@ function Home({ onSelectGame, gameMode, matchData, globalScores, onBackToModeSel
                     const isDisabled = gameMode === 'competitive' && !game.competitiveEnabled;
                     const cannotSelect = isOnline && !isHost; // En modo online, solo el host puede seleccionar
                     const finalDisabled = isDisabled || cannotSelect;
-                    
+
                     return (
                         <GameCard
                             key={game.id}
                             title={game.title}
                             description={
-                                isDisabled 
-                                    ? 'No disponible en modo competitivo' 
-                                    : cannotSelect 
-                                    ? 'Solo el anfitrión puede seleccionar'
-                                    : game.description
+                                isDisabled
+                                    ? (game.id === 'impostor' && matchData?.players?.length < 3
+                                        ? 'Se necesitan al menos 3 jugadores'
+                                        : 'No disponible en modo competitivo')
+                                    : cannotSelect
+                                        ? 'Solo el anfitrión puede seleccionar'
+                                        : game.description
                             }
                             icon={game.icon}
                             gradient={finalDisabled ? 'linear-gradient(135deg, #555 0%, #333 100%)' : game.gradient}
@@ -167,7 +179,11 @@ function Home({ onSelectGame, gameMode, matchData, globalScores, onBackToModeSel
 
             {onBackToModeSelector && (
                 <button
-                    onClick={onBackToModeSelector}
+                    onClick={() => {
+                        // Mostrar anuncio intersticial al volver al menú principal
+                        admobService.showInterstitial();
+                        onBackToModeSelector();
+                    }}
                     style={{
                         marginTop: '30px',
                         background: 'transparent',

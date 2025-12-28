@@ -3,9 +3,9 @@ import React from 'react';
 function LoadMatch({ matchData, onContinue, onNewMatch }) {
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        return date.toLocaleDateString('es-AR', { 
-            day: 'numeric', 
-            month: 'long', 
+        return date.toLocaleDateString('es-AR', {
+            day: 'numeric',
+            month: 'long',
             year: 'numeric',
             hour: '2-digit',
             minute: '2-digit'
@@ -15,7 +15,7 @@ function LoadMatch({ matchData, onContinue, onNewMatch }) {
     return (
         <div className="app-container">
             <div className="home-header">
-                <h1 className="home-title">Footy Games</h1>
+                <h1 className="home-title">Impostor Futbolero</h1>
                 <p className="home-subtitle">Hay una partida en curso</p>
             </div>
 
