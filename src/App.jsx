@@ -180,24 +180,27 @@ function App() {
 
   const handleSelectNetwork = (network) => {
     setNetworkMode(network);
-
-    if (network === 'offline') {
-      // Verificar si hay partidas guardadas offline
-      if (savedMatches.length > 0) {
-        setCurrentView('match-selector');
-      } else if (gameMode === 'competitive') {
-        setCurrentView('match-creator');
+    if (network) {
+      if (network === 'offline') {
+        if (gameMode === 'casual') {
+          setCurrentView('home');
+        } else {
+          // Si es competitivo y hay partidas guardadas
+          if (savedMatches.length > 0) {
+            setCurrentView('match-selector');
+          } else {
+            setCurrentView('match-creator');
+          }
+        }
       } else {
-        setCurrentView('home');
+        // Modo online - requiere autenticación
+        if (!currentUser) {
+          alert('Debes iniciar sesión para jugar en modo online');
+          setCurrentView('login');
+          return;
+        }
+        setCurrentView('online-action-selector');
       }
-    } else {
-      // Modo online - requiere autenticación
-      if (!currentUser) {
-        alert('Debes iniciar sesión para jugar en modo online');
-        setCurrentView('login');
-        return;
-      }
-      setCurrentView('online-action-selector');
     }
   };
 
@@ -668,7 +671,8 @@ function App() {
         <OnlineActionSelector
           onSelectAction={handleSelectOnlineAction}
           onBack={handleBackToNetworkSelector}
-          hasSavedMatches={savedMatches.length > 0 || onlineMatches.length > 0}
+          hasSavedMatches={gameMode === 'competitive' && (savedMatches.length > 0 || onlineMatches.length > 0)}
+          gameMode={gameMode}
         />
       )}
 
@@ -734,6 +738,9 @@ function App() {
         <ImpostorGame
           onBack={handleBackToHome}
           gameMode={gameMode}
+          matchPlayers={matchData?.players}
+          globalScores={globalScores}
+          onUpdateScores={handleUpdateScores}
           isOnline={networkMode === 'online'}
           isHost={isOnlineHost}
           onlineRoomCode={onlineRoomCode}

@@ -24,7 +24,7 @@ function GuessPlayerGame({ onBack, gameMode, matchPlayers, globalScores, onUpdat
                     setAllPlayers(roomData.gameState.guessPlayerResults);
                     // Filtrar para mostrar solo los jugadores de los demás
                     const filteredResults = roomData.gameState.guessPlayerResults.filter(
-                        r => r.name !== currentPlayerName
+                        r => r.name.trim().toLowerCase() !== currentPlayerName.trim().toLowerCase()
                     );
                     setResults(filteredResults);
                 }
@@ -33,7 +33,7 @@ function GuessPlayerGame({ onBack, gameMode, matchPlayers, globalScores, onUpdat
                     setScores(roomData.scores);
                 }
             });
-            
+
             return () => {
                 if (unsubscribe) unsubscribe();
             };
@@ -50,9 +50,11 @@ function GuessPlayerGame({ onBack, gameMode, matchPlayers, globalScores, onUpdat
     const handleNewRound = async () => {
         setError('');
         try {
-            const playerNames = playerText.split('\n').filter(name => name.trim() !== '');
+            const playerNames = playerText.split('\n')
+                .map(name => name.trim())
+                .filter(name => name !== '');
             const newResults = assignUniquePlayers(playerNames);
-            
+
             // Si es modo online, guardar en Firebase
             if (isOnline && onlineRoomCode) {
                 await firebaseService.updateGameState(onlineRoomCode, {
@@ -61,10 +63,10 @@ function GuessPlayerGame({ onBack, gameMode, matchPlayers, globalScores, onUpdat
                 });
                 setAllPlayers(newResults);
             }
-            
+
             // Si es online, filtrar resultados para no mostrar el jugador del usuario actual
             if (isOnline && currentPlayerName) {
-                const filteredResults = newResults.filter(r => r.name !== currentPlayerName);
+                const filteredResults = newResults.filter(r => r.name.trim().toLowerCase() !== currentPlayerName.trim().toLowerCase());
                 setResults(filteredResults);
             } else {
                 setResults(newResults);
@@ -95,7 +97,7 @@ function GuessPlayerGame({ onBack, gameMode, matchPlayers, globalScores, onUpdat
             newScores[winnerName] = (newScores[winnerName] || 0) + 1;
             setScores(newScores);
             if (onUpdateScores) onUpdateScores(newScores);
-            
+
             setRoundWinner({
                 name: winnerName,
                 points: 1,
@@ -185,7 +187,7 @@ function GuessPlayerGame({ onBack, gameMode, matchPlayers, globalScores, onUpdat
             ) : (
                 <>
                     <ResultList results={results} gameMode={gameMode} />
-                    
+
                     {gameMode === 'competitive' && (
                         <div className="card" style={{ marginTop: '20px' }}>
                             <h4 style={{ marginBottom: '15px' }}>¿Quién ganó la ronda?</h4>

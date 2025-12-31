@@ -157,7 +157,7 @@ function Home({ onSelectGame, gameMode, matchData, globalScores, onBackToModeSel
                 })}
             </div>
 
-            {onSaveGame && matchData && (
+            {gameMode === 'competitive' && onSaveGame && matchData && (
                 <button
                     onClick={() => {
                         console.log('💾 SAVE BUTTON CLICKED:', { isOnline, onlineRoomCode });

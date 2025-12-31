@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ResultList = ({ results }) => {
+const ResultList = ({ results, isOnline }) => {
     const [revealed, setRevealed] = useState(new Set());
 
     const toggleReveal = (index) => {
@@ -25,12 +25,14 @@ const ResultList = ({ results }) => {
         <div className="card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                 <h3>Resultados</h3>
-                <button
-                    onClick={revealAll}
-                    style={{ width: 'auto', padding: '8px 16px', fontSize: '0.9rem' }}
-                >
-                    {revealed.size === results.length ? 'Ocultar Todos' : 'Revelar Todos'}
-                </button>
+                {!isOnline && (
+                    <button
+                        onClick={revealAll}
+                        style={{ width: 'auto', padding: '8px 16px', fontSize: '0.9rem' }}
+                    >
+                        {revealed.size === results.length ? 'Ocultar Todos' : 'Revelar Todos'}
+                    </button>
+                )}
             </div>
 
             <ul className="player-list">

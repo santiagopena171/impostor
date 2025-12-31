@@ -27,7 +27,7 @@ function TorresGame({ onBack, gameMode, matchPlayers, globalScores, onUpdateScor
                     setAllTowers(roomData.gameState.torresResults);
                     // Filtrar para mostrar solo las torres de los demás
                     const filteredResults = roomData.gameState.torresResults.filter(
-                        r => r.name !== currentPlayerName
+                        r => r.name.trim().toLowerCase() !== currentPlayerName.trim().toLowerCase()
                     );
                     setResults(filteredResults);
                 }
@@ -36,7 +36,7 @@ function TorresGame({ onBack, gameMode, matchPlayers, globalScores, onUpdateScor
                     setScores(roomData.scores);
                 }
             });
-            
+
             return () => {
                 if (unsubscribe) unsubscribe();
             };
@@ -53,9 +53,11 @@ function TorresGame({ onBack, gameMode, matchPlayers, globalScores, onUpdateScor
     const handleNewRound = async () => {
         setError('');
         try {
-            const playerNames = playerText.split('\n').filter(name => name.trim() !== '');
+            const playerNames = playerText.split('\n')
+                .map(name => name.trim())
+                .filter(name => name !== '');
             const newResults = assignUniqueTowers(playerNames);
-            
+
             // Si es modo online, guardar en Firebase
             if (isOnline && onlineRoomCode) {
                 await firebaseService.updateGameState(onlineRoomCode, {
@@ -64,10 +66,10 @@ function TorresGame({ onBack, gameMode, matchPlayers, globalScores, onUpdateScor
                 });
                 setAllTowers(newResults);
             }
-            
+
             // Si es online, filtrar resultados para no mostrar la torre del jugador actual
             if (isOnline && currentPlayerName) {
-                const filteredResults = newResults.filter(r => r.name !== currentPlayerName);
+                const filteredResults = newResults.filter(r => r.name.trim().toLowerCase() !== currentPlayerName.trim().toLowerCase());
                 setResults(filteredResults);
             } else {
                 setResults(newResults);
@@ -101,7 +103,7 @@ function TorresGame({ onBack, gameMode, matchPlayers, globalScores, onUpdateScor
                 newScores[winnerName] = (newScores[winnerName] || 0) + winnerResult.points;
                 setScores(newScores);
                 if (onUpdateScores) onUpdateScores(newScores);
-                
+
                 setRoundWinner({
                     name: winnerName,
                     points: winnerResult.points,
@@ -216,9 +218,9 @@ function TorresGame({ onBack, gameMode, matchPlayers, globalScores, onUpdateScor
                             </div>
                         </div>
                     )}
-                    
+
                     <ResultList results={results} gameMode={gameMode} />
-                    
+
                     {gameMode === 'competitive' && (isHost || !isOnline) && (
                         <div className="card" style={{ marginTop: '20px' }}>
                             <h4 style={{ marginBottom: '15px' }}>¿Quién ganó la ronda?</h4>
