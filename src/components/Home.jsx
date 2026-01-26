@@ -23,6 +23,14 @@ function Home({ onSelectGame, gameMode, matchData, globalScores, onBackToModeSel
             competitiveEnabled: matchData?.players?.length >= 3
         },
         {
+            id: 'impostor-general',
+            title: 'Impostor Multiclasificación',
+            description: 'El mismo juego pero con múltiples categorías sin pistas',
+            icon: '🎭',
+            gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            competitiveEnabled: matchData?.players?.length >= 3
+        },
+        {
             id: 'guess-player',
             title: 'Adivina mi Jugador',
             description: 'Cada uno recibe un futbolista distinto. ¡Adivina quién es quién!',

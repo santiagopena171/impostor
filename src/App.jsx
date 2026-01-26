@@ -11,6 +11,7 @@ import MatchSelector from './components/MatchSelector';
 import LoadMatch from './components/LoadMatch';
 import Home from './components/Home';
 import ImpostorGame from './games/impostor/ImpostorGame';
+import ImpostorGameMultiCategory from './games/impostor-general/ImpostorGameMultiCategory';
 import GuessPlayerGame from './games/guess-player/GuessPlayerGame';
 import TorresGame from './games/torres/TorresGame';
 import firebaseService from './services/firebaseService';
@@ -736,6 +737,20 @@ function App() {
 
       {currentView === 'impostor' && (
         <ImpostorGame
+          onBack={handleBackToHome}
+          gameMode={gameMode}
+          matchPlayers={matchData?.players}
+          globalScores={globalScores}
+          onUpdateScores={handleUpdateScores}
+          isOnline={networkMode === 'online'}
+          isHost={isOnlineHost}
+          onlineRoomCode={onlineRoomCode}
+          currentPlayerName={onlinePlayerName}
+        />
+      )}
+
+      {currentView === 'impostor-general' && (
+        <ImpostorGameMultiCategory
           onBack={handleBackToHome}
           gameMode={gameMode}
           matchPlayers={matchData?.players}
