@@ -45,6 +45,14 @@ function Home({ onSelectGame, gameMode, matchData, globalScores, onBackToModeSel
             icon: '🏗️',
             gradient: 'linear-gradient(135deg, #F2994A 0%, #F2C94C 100%)',
             competitiveEnabled: true
+        },
+        {
+            id: 'turn-guess',
+            title: 'Adivina por Turnos',
+            description: 'Por turnos, adiviná al futbolista con nacionalidad y goles. Pedir pistas resta puntos.',
+            icon: '🔄',
+            gradient: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+            competitiveEnabled: matchData?.players?.length >= 2
         }
     ];
 

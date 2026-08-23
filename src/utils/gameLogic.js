@@ -1,5 +1,6 @@
 import { footballers } from '../data/footballers';
 import torres from '../data/torres.json';
+import { turnGuessPlayers } from '../data/turnGuessPlayers';
 
 export const assignRoles = (playerNames, impostorCount, withHints = false) => {
     // Filtrar nombres vacíos
@@ -137,4 +138,33 @@ export const assignUniqueTowers = (playerNames) => {
             isImpostor: false
         };
     });
+};
+
+// Costo en puntos de cada dato adicional del modo "Adivina por Turnos"
+export const TURN_GUESS_STARTING_POINTS = 10;
+export const TURN_GUESS_HINT_COSTS = {
+    clubes: 5,
+    posicion: 2,
+    palmares: 3
+};
+
+// Arma una nueva ronda para el modo "Adivina por Turnos"
+export const startTurnGuessRound = (playerNames, turnIndex) => {
+    const players = playerNames.filter(name => name.trim() !== '');
+
+    if (players.length < 2) {
+        throw new Error("Se necesitan al menos 2 jugadores.");
+    }
+
+    const safeIndex = ((turnIndex % players.length) + players.length) % players.length;
+    const guesser = players[safeIndex];
+    const target = turnGuessPlayers[Math.floor(Math.random() * turnGuessPlayers.length)];
+
+    return {
+        guesser,
+        turnIndex: safeIndex,
+        target,
+        pointsInPlay: TURN_GUESS_STARTING_POINTS,
+        usedHints: { clubes: false, posicion: false, palmares: false }
+    };
 };
