@@ -15,6 +15,7 @@ import ImpostorGameMultiCategory from './games/impostor-general/ImpostorGameMult
 import GuessPlayerGame from './games/guess-player/GuessPlayerGame';
 import TorresGame from './games/torres/TorresGame';
 import TurnGuessGame from './games/turn-guess/TurnGuessGame';
+import IntruderTurnGame from './games/intruder-turn/IntruderTurnGame';
 import firebaseService from './services/firebaseService';
 import admobService from './services/admobService';
 
@@ -432,7 +433,7 @@ function App() {
     }
 
     // Si había un juego en progreso, volver a ese juego
-    if (match.currentGame && ['impostor', 'guess-player', 'torres', 'turn-guess'].includes(match.currentGame)) {
+    if (match.currentGame && ['impostor', 'impostor-general', 'guess-player', 'torres', 'turn-guess', 'intruder-turn'].includes(match.currentGame)) {
       setCurrentView(match.currentGame);
     } else {
       setCurrentView('home');
@@ -794,6 +795,19 @@ function App() {
 
       {currentView === 'turn-guess' && (
         <TurnGuessGame
+          onBack={handleBackToHome}
+          matchPlayers={matchData?.players}
+          globalScores={globalScores}
+          onUpdateScores={handleUpdateScores}
+          isOnline={networkMode === 'online'}
+          isHost={isOnlineHost}
+          onlineRoomCode={onlineRoomCode}
+          currentPlayerName={onlinePlayerName}
+        />
+      )}
+
+      {currentView === 'intruder-turn' && (
+        <IntruderTurnGame
           onBack={handleBackToHome}
           matchPlayers={matchData?.players}
           globalScores={globalScores}

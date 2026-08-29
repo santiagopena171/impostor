@@ -53,6 +53,14 @@ function Home({ onSelectGame, gameMode, matchData, globalScores, onBackToModeSel
             icon: '🔄',
             gradient: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
             competitiveEnabled: matchData?.players?.length >= 2
+        },
+        {
+            id: 'intruder-turn',
+            title: 'El Intruso por Turnos',
+            description: 'Encontrá al futbolista que no comparte la característica de los otros cuatro.',
+            icon: '🔎',
+            gradient: 'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)',
+            competitiveEnabled: matchData?.players?.length >= 2
         }
     ];
 
