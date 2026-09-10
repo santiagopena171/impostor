@@ -167,7 +167,8 @@ function MatchSelector({ matches, onSelectMatch, onNewMatch, onDeleteMatch, onBa
                                             match.currentGame === 'impostor' ? 'Impostor Futbolero' :
                                             match.currentGame === 'guess-player' ? 'Adivina mi Jugador' :
                                             match.currentGame === 'torres' ? 'Torres Futboleras' :
-                                            match.currentGame === 'turn-guess' ? 'Adivina por Turnos' : match.currentGame
+                                            match.currentGame === 'turn-guess' ? 'Adivina por Turnos' :
+                                            match.currentGame === 'transfer-guess' ? 'Adivina la Transferencia' : match.currentGame
                                         }
                                     </p>
                                 )}

@@ -1,6 +1,7 @@
 import { footballers } from '../data/footballers';
 import torres from '../data/torres.json';
 import { turnGuessPlayers } from '../data/turnGuessPlayers';
+import { transfers } from '../data/transfers';
 
 export const assignRoles = (playerNames, impostorCount, withHints = false) => {
     // Filtrar nombres vacíos
@@ -166,5 +167,34 @@ export const startTurnGuessRound = (playerNames, turnIndex) => {
         target,
         pointsInPlay: TURN_GUESS_STARTING_POINTS,
         usedHints: { clubes: false, posicion: false, palmares: false }
+    };
+};
+
+// Arma una nueva ronda para el modo "Adivina la Transferencia"
+// usedIndices evita repetir transferencias ya salidas en la misma partida
+export const startTransferGuessRound = (playerNames, turnIndex, usedIndices = []) => {
+    const players = playerNames.filter(name => name.trim() !== '');
+
+    if (players.length < 2) {
+        throw new Error("Se necesitan al menos 2 jugadores.");
+    }
+
+    const safeIndex = ((turnIndex % players.length) + players.length) % players.length;
+    const guesser = players[safeIndex];
+
+    let availableIndices = transfers.map((_, i) => i).filter(i => !usedIndices.includes(i));
+    // Si ya se usaron todas, reiniciar el pool para seguir jugando
+    if (availableIndices.length === 0) {
+        availableIndices = transfers.map((_, i) => i);
+        usedIndices = [];
+    }
+    const transferIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+    const transfer = transfers[transferIndex];
+
+    return {
+        guesser,
+        turnIndex: safeIndex,
+        transfer,
+        usedIndices: [...usedIndices, transferIndex]
     };
 };

@@ -61,6 +61,14 @@ function Home({ onSelectGame, gameMode, matchData, globalScores, onBackToModeSel
             icon: '🔎',
             gradient: 'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)',
             competitiveEnabled: matchData?.players?.length >= 2
+        },
+        {
+            id: 'transfer-guess',
+            title: 'Adivina la Transferencia',
+            description: 'Se revela el año, los clubes y el monto de una transferencia. ¡Adivina al jugador!',
+            icon: '💸',
+            gradient: 'linear-gradient(135deg, #ff6a00 0%, #ee0979 100%)',
+            competitiveEnabled: matchData?.players?.length >= 2
         }
     ];
 
