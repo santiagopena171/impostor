@@ -17,6 +17,7 @@ import TorresGame from './games/torres/TorresGame';
 import TurnGuessGame from './games/turn-guess/TurnGuessGame';
 import IntruderTurnGame from './games/intruder-turn/IntruderTurnGame';
 import TransferGuessGame from './games/transfer-guess/TransferGuessGame';
+import DraftGame from './games/draft/DraftGame';
 import firebaseService from './services/firebaseService';
 import admobService from './services/admobService';
 
@@ -434,7 +435,7 @@ function App() {
     }
 
     // Si había un juego en progreso, volver a ese juego
-    if (match.currentGame && ['impostor', 'impostor-general', 'guess-player', 'torres', 'turn-guess', 'intruder-turn', 'transfer-guess'].includes(match.currentGame)) {
+    if (match.currentGame && ['impostor', 'impostor-general', 'guess-player', 'torres', 'turn-guess', 'intruder-turn', 'transfer-guess', 'draft'].includes(match.currentGame)) {
       setCurrentView(match.currentGame);
     } else {
       setCurrentView('home');
@@ -822,6 +823,19 @@ function App() {
 
       {currentView === 'transfer-guess' && (
         <TransferGuessGame
+          onBack={handleBackToHome}
+          matchPlayers={matchData?.players}
+          globalScores={globalScores}
+          onUpdateScores={handleUpdateScores}
+          isOnline={networkMode === 'online'}
+          isHost={isOnlineHost}
+          onlineRoomCode={onlineRoomCode}
+          currentPlayerName={onlinePlayerName}
+        />
+      )}
+
+      {currentView === 'draft' && (
+        <DraftGame
           onBack={handleBackToHome}
           matchPlayers={matchData?.players}
           globalScores={globalScores}

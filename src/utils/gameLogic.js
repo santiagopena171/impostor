@@ -2,6 +2,7 @@ import { footballers } from '../data/footballers';
 import torres from '../data/torres.json';
 import { turnGuessPlayers } from '../data/turnGuessPlayers';
 import { transfers } from '../data/transfers';
+import { draftClubs } from '../data/draftClubs';
 
 export const assignRoles = (playerNames, impostorCount, withHints = false) => {
     // Filtrar nombres vacíos
@@ -197,4 +198,171 @@ export const startTransferGuessRound = (playerNames, turnIndex, usedIndices = []
         transfer,
         usedIndices: [...usedIndices, transferIndex]
     };
+};
+
+// ---------- Modo "Draft de Goles" ----------
+// Cada jugador arma un equipo de 7 posiciones (1 portero, 2 defensas,
+// 2 mediocampistas, 2 delanteros) restando los goles de cada futbolista
+// elegido a un objetivo compartido. Gana quien quede más cerca de 0.
+export const DRAFT_SLOTS = [
+    { key: 'GK', label: 'Portero', count: 1 },
+    { key: 'DEF', label: 'Defensa', count: 2 },
+    { key: 'MID', label: 'Mediocampista', count: 2 },
+    { key: 'FWD', label: 'Delantero', count: 2 }
+];
+
+export const DRAFT_TOTAL_SLOTS = DRAFT_SLOTS.reduce((sum, s) => sum + s.count, 0);
+
+// Devuelve un objetivo de goles al azar, siempre mayor a 100 y hasta 600
+export const getRandomDraftTarget = () => 101 + Math.floor(Math.random() * 500);
+
+const emptyNeededPositions = () => {
+    const needed = {};
+    DRAFT_SLOTS.forEach(slot => { needed[slot.key] = slot.count; });
+    return needed;
+};
+
+const playerId = (clubName, playerName) => `${clubName}|${playerName}`;
+
+// Determina si un club todavía tiene, para cada jugador activo, al menos un
+// futbolista disponible (no elegido) en alguna posición que ese jugador necesite
+const clubHasOptionsForAll = (club, usedIds, players, order) => {
+    return order.every(name => {
+        const p = players[name];
+        if (!p || p.finished) return true;
+        return club.players.some(pl =>
+            (p.neededPositions[pl.position] || 0) > 0 && !usedIds.has(playerId(club.name, pl.name))
+        );
+    });
+};
+
+// Arma el estado inicial de una partida de Draft
+export const initDraftState = (playerNames) => {
+    const names = playerNames.map(n => n.trim()).filter(n => n !== '');
+    if (names.length < 2) {
+        throw new Error('Se necesitan al menos 2 jugadores.');
+    }
+
+    const target = getRandomDraftTarget();
+    const players = {};
+    names.forEach(name => {
+        players[name] = {
+            remaining: target,
+            neededPositions: emptyNeededPositions(),
+            picks: [],
+            finished: false
+        };
+    });
+
+    const state = {
+        target,
+        players,
+        order: [...names],
+        usedIds: [],
+        currentClub: null,
+        pickIndex: 0,
+        round: 1,
+        finished: false
+    };
+
+    return startDraftRound(state);
+};
+
+// Sortea un nuevo club válido para iniciar la ronda (o marca la partida como terminada)
+export const startDraftRound = (state) => {
+    const usedIds = new Set(state.usedIds);
+    const activeOrder = state.order.filter(name => !state.players[name].finished);
+
+    if (activeOrder.length === 0) {
+        return { ...state, finished: true, currentClub: null };
+    }
+
+    const validClubs = draftClubs.filter(club => clubHasOptionsForAll(club, usedIds, state.players, activeOrder));
+
+    if (validClubs.length === 0) {
+        // No quedan clubes con opciones válidas para todos: termina la partida
+        return { ...state, finished: true, currentClub: null };
+    }
+
+    const club = validClubs[Math.floor(Math.random() * validClubs.length)];
+
+    return {
+        ...state,
+        order: activeOrder,
+        currentClub: club,
+        pickIndex: 0
+    };
+};
+
+// Devuelve los futbolistas elegibles del club actual para el jugador dado
+export const getEligibleDraftPlayers = (state, playerName) => {
+    if (!state.currentClub) return [];
+    const usedIds = new Set(state.usedIds);
+    const player = state.players[playerName];
+    if (!player) return [];
+
+    return state.currentClub.players.filter(pl =>
+        (player.neededPositions[pl.position] || 0) > 0 && !usedIds.has(playerId(state.currentClub.name, pl.name))
+    );
+};
+
+// Aplica la elección de un futbolista para el jugador que le toca el turno
+export const makeDraftPick = (state, chosenPlayerName) => {
+    if (state.finished || !state.currentClub) {
+        throw new Error('No hay una ronda activa.');
+    }
+
+    const currentName = state.order[state.pickIndex];
+    if (!currentName) {
+        throw new Error('No se pudo determinar el turno actual.');
+    }
+
+    const eligible = getEligibleDraftPlayers(state, currentName);
+    const chosen = eligible.find(pl => pl.name === chosenPlayerName);
+    if (!chosen) {
+        throw new Error('Ese futbolista no es una opción válida para este turno.');
+    }
+
+    const club = state.currentClub;
+    const players = { ...state.players };
+    const player = { ...players[currentName] };
+
+    player.remaining = player.remaining - chosen.goals;
+    player.neededPositions = { ...player.neededPositions, [chosen.position]: player.neededPositions[chosen.position] - 1 };
+    // Firebase RTDB strips empty arrays on round-trip, so picks/usedIds may come back undefined
+    player.picks = [...(player.picks || []), { name: chosen.name, position: chosen.position, goals: chosen.goals, club: club.name }];
+    player.finished = Object.values(player.neededPositions).every(v => v === 0);
+    players[currentName] = player;
+
+    const usedIds = [...(state.usedIds || []), playerId(club.name, chosen.name)];
+    const nextPickIndex = state.pickIndex + 1;
+
+    let nextState = {
+        ...state,
+        players,
+        usedIds,
+        pickIndex: nextPickIndex
+    };
+
+    if (nextPickIndex >= state.order.length) {
+        // Terminó la ronda: rota el orden (el primero pasa al final) y arranca la siguiente
+        const rotatedOrder = [...state.order.slice(1), state.order[0]];
+        nextState = {
+            ...nextState,
+            order: rotatedOrder,
+            round: state.round + 1
+        };
+        nextState = startDraftRound(nextState);
+    }
+
+    return nextState;
+};
+
+// Determina el/los ganador/es: quien(es) quede(n) más cerca de 0 en valor absoluto
+export const getDraftWinners = (state) => {
+    const entries = Object.entries(state.players);
+    if (entries.length === 0) return [];
+
+    const minAbs = Math.min(...entries.map(([, p]) => Math.abs(p.remaining)));
+    return entries.filter(([, p]) => Math.abs(p.remaining) === minAbs).map(([name]) => name);
 };

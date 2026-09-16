@@ -69,6 +69,14 @@ function Home({ onSelectGame, gameMode, matchData, globalScores, onBackToModeSel
             icon: '💸',
             gradient: 'linear-gradient(135deg, #ff6a00 0%, #ee0979 100%)',
             competitiveEnabled: matchData?.players?.length >= 2
+        },
+        {
+            id: 'draft',
+            title: 'Draft de Goles',
+            description: 'Armá tu equipo eligiendo futbolistas de un club al azar y quedá lo más cerca posible de 0 goles.',
+            icon: '🎯',
+            gradient: 'linear-gradient(135deg, #0f9b0f 0%, #00c853 100%)',
+            competitiveEnabled: matchData?.players?.length >= 2
         }
     ];
 
